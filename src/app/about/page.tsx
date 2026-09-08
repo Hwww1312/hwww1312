@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-[1440px] px-5 pb-28 pt-[22vh] sm:px-8">
-      <p className="text-xs font-medium uppercase tracking-[0.28em] text-lemongrass">
+      <p className="text-xs font-medium uppercase tracking-[0.28em] text-jade">
         About
       </p>
       <h1 className="mt-5 max-w-[16ch] text-[length:var(--text-chapter)] leading-[0.98]">
@@ -20,7 +20,7 @@ export default function AboutPage() {
       </h1>
 
       <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
-        <div className="space-y-6 text-base leading-relaxed text-sage lg:col-span-6">
+        <div className="space-y-6 text-base leading-relaxed text-ink-soft lg:col-span-6">
           <p>{STORY.introduction.body}</p>
           <p>{STORY.transformation.body}</p>
           <p>
@@ -35,7 +35,7 @@ export default function AboutPage() {
         {/* Every figure below is from the Google Business listing. */}
         <dl className="lg:col-span-5 lg:col-start-8">
           <h2 className="sr-only">Restaurant details</h2>
-          <div className="divide-y divide-ivory/15 border-y border-ivory/15">
+          <div className="divide-y divide-ink/15 border-y border-ink/15">
             {[
               ["Cuisine", BUSINESS.category],
               ["Address", BUSINESS.addressFull],
@@ -47,7 +47,7 @@ export default function AboutPage() {
               ["Plus code", BUSINESS.plusCode],
             ].map(([term, value]) => (
               <div key={term} className="grid grid-cols-3 gap-4 py-4">
-                <dt className="text-sm uppercase tracking-[0.14em] text-sage">{term}</dt>
+                <dt className="text-sm uppercase tracking-[0.14em] text-ink-soft">{term}</dt>
                 <dd className="col-span-2 text-base">{value}</dd>
               </div>
             ))}
@@ -61,7 +61,7 @@ export default function AboutPage() {
       <ul className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
         {DISHES.slice(0, 4).map((dish) => (
           <li key={dish.slug}>
-            <div className="overflow-hidden border border-ivory/12 bg-lacquer-2">
+            <div className="overflow-hidden border border-ink/12 bg-cream">
               <Image
                 src={`/images/dishes/${dish.slug}.jpg`}
                 alt={`${dish.name} at ${BUSINESS.name}`}

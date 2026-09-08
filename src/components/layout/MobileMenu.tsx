@@ -36,7 +36,7 @@ export function MobileMenu() {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        className="flex h-11 w-11 items-center justify-center text-ivory"
+        className="flex h-11 w-11 items-center justify-center text-ink"
       >
         <span className="sr-only">Open menu</span>
         <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -48,7 +48,7 @@ export function MobileMenu() {
         <div
           id="mobile-menu"
           ref={panelRef}
-          className="fixed inset-0 z-[60] flex flex-col bg-lacquer"
+          className="fixed inset-0 z-[60] flex flex-col bg-paper"
         >
           <div className="flex h-[72px] items-center justify-end px-5">
             <button
@@ -57,7 +57,7 @@ export function MobileMenu() {
                 setOpen(false);
                 triggerRef.current?.focus();
               }}
-              className="flex h-11 w-11 items-center justify-center text-ivory"
+              className="flex h-11 w-11 items-center justify-center text-ink"
             >
               <span className="sr-only">Close menu</span>
               <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -72,14 +72,14 @@ export function MobileMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="border-b border-ivory/12 py-5 font-[family-name:var(--font-display)] text-4xl font-extrabold tracking-tight"
+                className="border-b border-ink/12 py-5 font-[family-name:var(--font-display)] text-4xl font-extrabold tracking-tight"
               >
                 {link.label}
               </Link>
             ))}
             <a
               href={BUSINESS.phoneHref}
-              className="mt-8 bg-lemongrass px-7 py-4 text-center text-base font-semibold text-lacquer"
+              className="mt-8 bg-jade px-7 py-4 text-center text-base font-semibold text-paper"
             >
               Call {BUSINESS.phoneDisplay}
             </a>

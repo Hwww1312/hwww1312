@@ -6,6 +6,17 @@ Springvale VIC 3171, plus the supporting pages.
 Next.js 16 (App Router) · React 19 · React Three Fiber · GSAP ScrollTrigger ·
 Tailwind v4.
 
+## Look
+
+Warm cream ground, dark green ink, a deep jade accent with turmeric for
+ratings. Fraunces carries the headlines, Inter the body, both self-hosted as
+latin-subset woff2. The measure is an editorial 1180px (`.shell`), not a
+cinematic full-bleed.
+
+The 3D sits inside that calm rather than fighting it: the crockery is celadon
+glazed so it holds against cream, lit by a broad hemisphere plus one key that
+casts the contact shadow grounding it. Tokens live in `src/app/globals.css`.
+
 ```bash
 npm install
 npm run dev        # http://localhost:3000

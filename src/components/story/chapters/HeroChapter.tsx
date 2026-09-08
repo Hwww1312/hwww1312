@@ -9,9 +9,9 @@ export function HeroChapter() {
       aria-labelledby="hero-heading"
       className="relative flex min-h-dvh flex-col justify-end pb-20 pt-28 sm:pb-28"
     >
-      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+      <div className="shell">
         <span className="rise-mask">
-          <span className="rise text-xs font-medium uppercase tracking-[0.28em] text-lemongrass">
+          <span className="rise text-xs font-medium uppercase tracking-[0.28em] text-jade">
             {hero.eyebrow}
           </span>
         </span>
@@ -29,7 +29,7 @@ export function HeroChapter() {
           ))}
         </h1>
 
-        <p className="mt-7 max-w-[46ch] text-base leading-relaxed text-sage sm:text-lg">
+        <p className="mt-7 max-w-[46ch] text-base leading-relaxed text-ink-soft sm:text-lg">
           {hero.body}
         </p>
 
@@ -42,9 +42,9 @@ export function HeroChapter() {
 
         <p
           aria-hidden="true"
-          className="mt-16 flex items-center gap-3 text-xs uppercase tracking-[0.24em] text-sage-dim"
+          className="mt-16 flex items-center gap-3 text-xs uppercase tracking-[0.24em] text-ink-faint"
         >
-          <span className="h-8 w-px bg-gradient-to-b from-lemongrass to-transparent" />
+          <span className="h-8 w-px bg-gradient-to-b from-jade to-transparent" />
           {hero.scrollCue}
         </p>
       </div>

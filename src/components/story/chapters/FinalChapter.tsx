@@ -20,7 +20,7 @@ export function FinalChapter() {
             </span>
           ))}
         </h2>
-        <p className="mx-auto mt-7 max-w-[44ch] text-base leading-relaxed text-sage">
+        <p className="mx-auto mt-7 max-w-[44ch] text-base leading-relaxed text-ink-soft">
           {final.body}
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">

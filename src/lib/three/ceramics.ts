@@ -64,12 +64,23 @@ export function foodDomeGeometry(radius: number, rise: number): THREE.BufferGeom
 export function glazeMaterial(color: THREE.ColorRepresentation) {
   return new THREE.MeshPhysicalMaterial({
     color,
-    roughness: 0.32,
+    roughness: 0.3,
     metalness: 0.0,
-    clearcoat: 0.7,
-    clearcoatRoughness: 0.22,
+    clearcoat: 0.5,
+    clearcoatRoughness: 0.3,
   });
 }
+
+/**
+ * Celadon, the classic Southeast Asian glaze. On a warm cream page a white
+ * plate disappears, so the tableware carries a soft green body and lets the
+ * food photograph supply the colour.
+ */
+export const GLAZE = {
+  plate: "#83a091",
+  bowl: "#769384",
+  side: "#8ea89a",
+} as const;
 
 /** Brushed steel for the steamboat pot and burner. */
 export function steelMaterial() {

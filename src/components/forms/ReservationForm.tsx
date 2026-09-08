@@ -23,13 +23,13 @@ function Field({
   return (
     <p className="flex flex-col gap-2">
       {/* Label above the control, error below it. Never placeholder-as-label. */}
-      <label htmlFor={name} className="text-sm font-medium text-ivory">
+      <label htmlFor={name} className="text-sm font-medium text-ink">
         {label}
       </label>
       {children}
-      {hint && !error && <span className="text-xs text-sage">{hint}</span>}
+      {hint && !error && <span className="text-xs text-ink-soft">{hint}</span>}
       {error && (
-        <span id={`${name}-error`} role="alert" className="text-xs text-lemongrass">
+        <span id={`${name}-error`} role="alert" className="text-xs text-jade">
           {error}
         </span>
       )}
@@ -38,8 +38,8 @@ function Field({
 }
 
 const control =
-  "w-full border border-ivory/25 bg-lacquer-2 px-4 py-3 text-base text-ivory " +
-  "placeholder:text-sage-dim focus:border-lemongrass focus:outline-none";
+  "w-full border border-ink/25 bg-cream px-4 py-3 text-base text-ink " +
+  "placeholder:text-ink-faint focus:border-jade focus:outline-none";
 
 export function ReservationForm() {
   const [state, formAction, pending] = useActionState(submitReservation, initial);
@@ -124,13 +124,13 @@ export function ReservationForm() {
         <button
           type="submit"
           disabled={pending}
-          className="bg-lemongrass px-7 py-4 text-base font-semibold text-lacquer transition-colors hover:bg-ivory active:translate-y-px disabled:opacity-60"
+          className="bg-jade px-7 py-4 text-base font-semibold text-paper transition-colors hover:bg-jade-deep active:translate-y-px disabled:opacity-60"
         >
           {pending ? "Sending..." : "Request a table"}
         </button>
         <a
           href={BUSINESS.phoneHref}
-          className="text-base text-ivory underline decoration-lemongrass/45 underline-offset-4 hover:decoration-lemongrass"
+          className="text-base text-ink underline decoration-jade/45 underline-offset-4 hover:decoration-jade"
         >
           or call {BUSINESS.phoneDisplay}
         </a>
@@ -141,8 +141,8 @@ export function ReservationForm() {
           <p
             className={`border-l-2 py-3 pl-4 text-base ${
               state.status === "sent"
-                ? "border-lemongrass text-ivory"
-                : "border-ivory/40 text-sage"
+                ? "border-jade text-ink"
+                : "border-ink/40 text-ink-soft"
             }`}
           >
             {state.message}

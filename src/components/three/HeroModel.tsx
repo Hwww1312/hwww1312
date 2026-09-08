@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import {
-  BOWL_PROFILE, PLATE_PROFILE, POT_PROFILE,
+  BOWL_PROFILE, GLAZE, PLATE_PROFILE, POT_PROFILE,
   foodDomeGeometry, glazeMaterial, steelMaterial, vesselGeometry,
 } from "@/lib/three/ceramics";
 import { resolveStory, storyState } from "@/lib/story/state";
@@ -111,10 +111,10 @@ export function HeroModel() {
 
   const materials = useMemo(
     () => ({
-      plate: glazeMaterial("#efe9dc"),
-      bowl: glazeMaterial("#e9e3d4"),
+      plate: glazeMaterial(GLAZE.plate),
+      bowl: glazeMaterial(GLAZE.bowl),
       pot: steelMaterial(),
-      side: glazeMaterial("#e6dfd0"),
+      side: glazeMaterial(GLAZE.side),
     }),
     [],
   );

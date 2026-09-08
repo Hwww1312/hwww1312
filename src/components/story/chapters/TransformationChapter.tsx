@@ -8,9 +8,9 @@ export function TransformationChapter() {
       aria-labelledby="transformation-heading"
       className="relative flex min-h-dvh items-end py-28"
     >
-      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+      <div className="shell">
         {/* The object owns the frame here, so the copy sits low and quiet. */}
-        <p className="text-xs font-medium uppercase tracking-[0.28em] text-lemongrass">
+        <p className="text-xs font-medium uppercase tracking-[0.28em] text-jade">
           {transformation.eyebrow}
         </p>
         <h2
@@ -19,7 +19,7 @@ export function TransformationChapter() {
         >
           {transformation.headline}
         </h2>
-        <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-sage">
+        <p className="mt-6 max-w-[54ch] text-base leading-relaxed text-ink-soft">
           {transformation.body}
         </p>
       </div>

@@ -5,16 +5,16 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
-const bricolage = localFont({
-  src: "../fonts/bricolage-grotesque.woff2",
-  variable: "--font-bricolage",
-  weight: "400 800",
+const fraunces = localFont({
+  src: "../fonts/fraunces.woff2",
+  variable: "--font-fraunces",
+  weight: "400 700",
   display: "swap",
 });
 
-const interTight = localFont({
-  src: "../fonts/inter-tight.woff2",
-  variable: "--font-inter-tight",
+const inter = localFont({
+  src: "../fonts/inter.woff2",
+  variable: "--font-inter",
   weight: "400 600",
   display: "swap",
 });
@@ -50,15 +50,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05140f",
-  colorScheme: "dark",
+  themeColor: "#fbf6ec",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-AU" className={`${bricolage.variable} ${interTight.variable}`}>
+    <html lang="en-AU" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="min-h-dvh antialiased">
         <a href="#main" className="skip-link">
           Skip to content

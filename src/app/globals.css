@@ -3,43 +3,46 @@
 /* ------------------------------------------------------------------ *
  * Cambodian Food Stars design tokens.
  *
- * Near-black lacquer green ground, warm ivory type, one accent.
- * Green is the brand; lemongrass chartreuse is the single accent that
- * is allowed to glow against it.
+ * Warm cream ground, dark green ink, a deep jade accent with turmeric
+ * for highlights. A serif display face carries the headlines; the body
+ * is a neutral grotesque so the two never compete.
  * ------------------------------------------------------------------ */
 @theme {
-  --color-lacquer: #05140f;
-  --color-lacquer-2: #071c18;
-  --color-lacquer-3: #0b2620;
-  --color-lacquer-4: #123a31;
+  --color-paper: #fbf6ec;
+  --color-cream: #f2e7d3;
+  --color-cream-deep: #e5d5b8;
 
-  --color-ivory: #f2eee3;
-  --color-sage: #9db2a9;
-  --color-sage-dim: #6d837b;
+  --color-ink: #16251f;
+  --color-ink-soft: #47574d;
+  --color-ink-faint: #7c8880;
 
-  --color-lemongrass: #c8dc4b;
-  --color-lemongrass-dim: #8fa036;
+  --color-jade: #2a5a4c;
+  --color-jade-deep: #10221c;
+  --color-turmeric: #c4862a;
+  --color-chili: #a33328;
 
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* Editorial display scale. Clamps so headlines never wrap to four lines. */
-  --text-hero: clamp(2.75rem, 9vw, 8.5rem);
-  --text-chapter: clamp(2rem, 5.4vw, 4.5rem);
-  --text-section: clamp(1.75rem, 3.6vw, 3rem);
+  /* An editorial measure rather than a cinematic one. */
+  --shell: min(1180px, 100% - 2.5rem);
+
+  --text-hero: clamp(2.6rem, 7.4vw, 6rem);
+  --text-chapter: clamp(1.9rem, 4.4vw, 3.5rem);
+  --text-section: clamp(1.5rem, 2.8vw, 2.25rem);
 
   --ease-story: cubic-bezier(0.16, 0.84, 0.36, 1);
 }
 
 @layer base {
   html {
-    background-color: var(--color-lacquer);
+    background-color: var(--color-paper);
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: var(--color-lacquer);
-    color: var(--color-ivory);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-body);
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
@@ -50,30 +53,29 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
   ::selection {
-    background: var(--color-lemongrass);
-    color: var(--color-lacquer);
+    background: var(--color-jade);
+    color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-lemongrass);
+    outline: 2px solid var(--color-jade);
     outline-offset: 3px;
     border-radius: 1px;
   }
 
-  /* Skip link is the first tab stop on every page. */
   .skip-link {
     position: absolute;
     left: 1rem;
     top: -100%;
     z-index: 100;
-    background: var(--color-lemongrass);
-    color: var(--color-lacquer);
+    background: var(--color-jade);
+    color: var(--color-paper);
     padding: 0.75rem 1.25rem;
     font-weight: 600;
     transition: top 150ms var(--ease-story);
@@ -84,8 +86,14 @@
 }
 
 @layer components {
-  /* Entrance builds run on mount and finish quickly, so a full-page capture
-     and a reduced-motion user both see finished text. Transform only. */
+  /* The page shell, matching the reference's narrower editorial measure. */
+  .shell {
+    width: var(--shell);
+    margin-inline: auto;
+  }
+
+  /* Entrance builds run on mount and finish fast, so a full-page capture
+     and a reduced-motion visitor both see finished text. Transform only. */
   .rise-mask {
     display: block;
     overflow: hidden;
@@ -103,25 +111,10 @@
     }
   }
 
-  /* Fine film grain over the dark ground. Pure CSS, no image request. */
-  .grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: repeating-radial-gradient(
-      circle at 17% 29%,
-      var(--color-ivory) 0 0.6px,
-      transparent 0.6px 2.4px
-    );
-    mix-blend-mode: overlay;
-  }
-
   .rule-lines {
     background-image: repeating-linear-gradient(
       to right,
-      color-mix(in oklab, var(--color-ivory) 8%, transparent) 0 1px,
+      color-mix(in oklab, var(--color-ink) 10%, transparent) 0 1px,
       transparent 1px 100%
     );
     background-size: 25% 100%;

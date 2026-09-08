@@ -10,13 +10,17 @@ const NEUTRAL = new THREE.Color("#fff6e8");
 const scratch = new THREE.Color();
 
 /**
- * One key light with a warmth dial, plus a lemongrass rim that separates the
- * ceramic from the near-black ground. Both are driven by the story timeline.
+ * Lighting for a light set.
+ *
+ * On a cream page the subject is darker than its surroundings, so the work is
+ * done by a broad hemisphere fill plus one directional key that casts the
+ * shadow grounding the plate. A rim light would be invisible here, so the
+ * separation comes from the shadow instead.
  */
 export function Lighting() {
   const key = useRef<THREE.DirectionalLight>(null);
-  const rim = useRef<THREE.DirectionalLight>(null);
-  const ambient = useRef<THREE.AmbientLight>(null);
+  const fill = useRef<THREE.DirectionalLight>(null);
+  const sky = useRef<THREE.HemisphereLight>(null);
 
   useFrame(() => {
     const { lighting } = resolveStory(storyState.progress, storyState.isMobile);
@@ -25,24 +29,25 @@ export function Lighting() {
       key.current.intensity = lighting.keyIntensity;
       key.current.color.copy(scratch.copy(NEUTRAL).lerp(WARM, lighting.keyWarmth));
     }
-    if (rim.current) rim.current.intensity = lighting.rimIntensity;
-    if (ambient.current) ambient.current.intensity = lighting.ambient;
+    if (fill.current) fill.current.intensity = lighting.rimIntensity;
+    if (sky.current) sky.current.intensity = lighting.ambient;
   });
 
   return (
     <>
-      <ambientLight ref={ambient} intensity={0.08} color="#cfe0d6" />
+      {/* Cream sky, warm timber bounce from below. */}
+      <hemisphereLight ref={sky} args={["#fff8ec", "#d8c3a0", 0.7]} />
       <directionalLight
         ref={key}
         position={[2.4, 4.2, 2.2]}
-        intensity={2.5}
+        intensity={1.6}
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={0.5}
         shadow-camera-far={18}
         shadow-bias={-0.0006}
       />
-      <directionalLight ref={rim} position={[-3.2, 1.6, -2.8]} intensity={1.6} color="#c8dc4b" />
+      <directionalLight ref={fill} position={[-3.2, 1.8, -2.4]} intensity={0.5} color="#cfe0d6" />
     </>
   );
 }

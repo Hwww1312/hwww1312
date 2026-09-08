@@ -18,7 +18,7 @@ export function ModelFallback() {
           className="object-cover [mask-image:radial-gradient(circle_at_50%_50%,#000_38%,transparent_72%)]"
         />
       </div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_50%,transparent_0%,rgba(5,20,15,0.55)_55%,#05140f_82%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_50%,transparent_0%,rgba(251,246,236,0.55)_55%,#fbf6ec_82%)]" />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { Suspense } from "react";
-import { ContactShadows, Preload } from "@react-three/drei";
+import { Preload } from "@react-three/drei";
+import { GroundShadow } from "@/components/three/GroundShadow";
 import { HeroModel } from "@/components/three/HeroModel";
 import { Lighting } from "@/components/three/Lighting";
 import { StoryEnvironment } from "@/components/three/StoryEnvironment";
@@ -17,17 +18,7 @@ export function StoryScene({ shadows }: { shadows: boolean }) {
         <HeroModel />
         <Preload all />
       </Suspense>
-      {shadows && (
-        <ContactShadows
-          position={[0, -0.42, 0]}
-          opacity={0.55}
-          scale={9}
-          blur={2.6}
-          far={4}
-          resolution={512}
-          color="#010a07"
-        />
-      )}
+      {shadows && <GroundShadow />}
     </>
   );
 }

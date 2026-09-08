@@ -16,7 +16,7 @@ export function StoryProgress({ active }: { active: number }) {
         <span
           key={c.id}
           className={`block h-px transition-all duration-500 ease-out ${
-            i === active ? "w-9 bg-lemongrass" : "w-4 bg-ivory/25"
+            i === active ? "w-9 bg-jade" : "w-4 bg-ink/20"
           }`}
         />
       ))}

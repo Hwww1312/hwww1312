@@ -15,7 +15,7 @@ export function IntroductionChapter() {
           <SectionHeading eyebrow={introduction.eyebrow}>
             <span id="introduction-heading">{introduction.headline}</span>
           </SectionHeading>
-          <p className="mt-8 max-w-[52ch] text-base leading-relaxed text-sage">
+          <p className="mt-8 max-w-[52ch] text-base leading-relaxed text-ink-soft">
             {introduction.body}
           </p>
         </div>
