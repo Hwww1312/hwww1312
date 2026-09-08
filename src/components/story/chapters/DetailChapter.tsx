@@ -7,7 +7,7 @@ export function DetailChapter() {
     <section
       id="detail"
       aria-labelledby="detail-heading"
-      className="relative py-28"
+      className="relative pb-28 pt-[46vh] lg:py-28"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
         <SectionHeading eyebrow={details.eyebrow}>

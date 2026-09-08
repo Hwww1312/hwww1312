@@ -1,5 +1,5 @@
-import { StoryContent } from "@/components/story/StoryContent";
+import { StoryExperience } from "@/components/story/StoryExperience";
 
 export default function HomePage() {
-  return <StoryContent />;
+  return <StoryExperience />;
 }

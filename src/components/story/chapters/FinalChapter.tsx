@@ -7,7 +7,7 @@ export function FinalChapter() {
     <section
       id="final"
       aria-labelledby="final-heading"
-      className="relative flex min-h-dvh items-center py-28"
+      className="relative flex min-h-dvh items-start pb-28 pt-[48vh] lg:pt-[22vh]"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 text-center sm:px-8">
         <h2

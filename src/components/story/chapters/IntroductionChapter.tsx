@@ -7,7 +7,7 @@ export function IntroductionChapter() {
     <section
       id="story"
       aria-labelledby="introduction-heading"
-      className="relative flex min-h-dvh items-center py-28"
+      className="relative flex min-h-dvh items-start pb-24 pt-[46vh] lg:items-center lg:py-28"
     >
       <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-12">
         {/* Text holds the left third so the hero object keeps the right. */}
