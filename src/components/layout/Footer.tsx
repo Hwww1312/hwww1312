@@ -39,8 +39,11 @@ export function Footer() {
           </address>
 
           <div className="text-sm text-sage">
-            <p className="text-ivory">Closes {BUSINESS.closingTime}</p>
+            <p className="text-ivory">
+              {BUSINESS.openingTime} to {BUSINESS.closingTime}
+            </p>
             <p className="mt-1">Busiest {BUSINESS.busiest}</p>
+            <p className="mt-1">{BUSINESS.serviceOptions.join(" / ")}</p>
             <p className="mt-3">Opening times can change, so call before you travel.</p>
           </div>
 

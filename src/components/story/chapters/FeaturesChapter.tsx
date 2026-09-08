@@ -63,14 +63,20 @@ export function FeaturesChapter() {
             </div>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-px bg-ivory/15 md:grid-cols-2">
+          {/* Three verbatim Google reviews. Cells stretch to a common row
+              height so the differing lengths read as one wall, not cards. */}
+          <div className="mt-12 grid grid-cols-1 gap-px bg-ivory/15 md:grid-cols-2 lg:grid-cols-3">
             {REVIEWS.map((review) => (
-              <blockquote key={review.author} className="bg-lacquer p-8 sm:p-10">
-                <Stars value={review.rating} className="h-3.5 w-[81px] text-lemongrass" />
-                <p className="mt-6 font-[family-name:var(--font-display)] text-2xl leading-snug tracking-tight sm:text-[1.7rem]">
+              <blockquote key={review.author} className="flex flex-col bg-lacquer p-8 sm:p-10">
+                <Stars value={review.rating} className="h-3.5 w-[81px] shrink-0 text-lemongrass" />
+                <p
+                  className={`mt-6 flex-1 font-[family-name:var(--font-display)] leading-snug tracking-tight ${
+                    review.featured ? "text-2xl sm:text-[1.6rem]" : "text-xl sm:text-2xl"
+                  }`}
+                >
                   &ldquo;{review.quote}&rdquo;
                 </p>
-                <footer className="mt-7 text-sm text-sage">
+                <footer className="mt-7 shrink-0 text-sm text-sage">
                   {review.author}
                   <span className="px-2 text-ivory/25">/</span>
                   {review.context}

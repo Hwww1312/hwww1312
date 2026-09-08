@@ -27,8 +27,18 @@ export const BUSINESS = {
   addressFull: "14 Buckingham Ave, Springvale VIC 3171",
   phoneDisplay: "(03) 9558 5555",
   phoneHref: "tel:+61395585555",
+  openingTime: "8:00 am",
   closingTime: "9:00 pm",
   busiest: "6 pm to 8 pm",
+  /** Google lists dine in and takeaway as the available service options. */
+  serviceOptions: ["Dine in", "Takeaway"] as const,
+  /**
+   * Google's own per-person range, from 7 reported visits. Shown with that
+   * attribution because it is a visitor-reported spread, not a menu price.
+   */
+  priceRange: "$1 to $120 per person",
+  priceRangeSource: "Google, from 7 reports",
+  plusCode: "3522+GF Springvale, Victoria",
   rating: 3.8,
   reviewCount: 41,
   mapsDirections:
@@ -41,21 +51,34 @@ export const BUSINESS = {
 /** PLACEHOLDER - no canonical domain supplied. Update before launch. */
 export const SITE_ORIGIN = "https://cambodianfoodstars.com.au";
 
-/** VERIFIED - quoted exactly as written by the reviewer on Google. */
+/**
+ * VERIFIED - quoted exactly as written by each reviewer on Google, including
+ * their own spelling and spacing. Nothing is tidied up or paraphrased.
+ */
 export const REVIEWS = [
   {
     quote:
-      "What a fantastic restaurant. The food is absolutely amazing, authentic and made with love.",
+      "What a fantastic restaurant. The food is absolutely amazing, authentic and made with love. We ordered 6 dishes and each was delicious. If you have never tried Cambodian food or love Cambodian food I highly recommend this restaurant. The owners are so lovely and made us feel very at home as well.",
     author: "Julie D",
     context: "Google review",
     rating: 5,
+    featured: true,
   },
   {
     quote:
-      "Authentic cambodian food. Friendly service. I like the lady boss , very friendly and offer me her own food to try.",
+      "World class Lok Lak (fried tender beef cubes) and excellent service, Anna provided excellent food and service, I strongly recommend anyone wanting Cambodian food to come here",
+    author: "Mark D",
+    context: "Google review",
+    rating: 5,
+    featured: false,
+  },
+  {
+    quote:
+      "Authentic cambodian food. Friendly service. I like the lady boss , very friendly and offer me her own food to try. Multiple dishes from noodles to rice. Look forward to trying other dishes",
     author: "k J",
     context: "Google Local Guide",
     rating: 5,
+    featured: false,
   },
 ] as const;
 
@@ -86,7 +109,7 @@ export const STORY = {
   hero: {
     eyebrow: "Springvale",
     headline: ["One plate,", "set down with care"],
-    body: "A Khmer kitchen cooking to order on Buckingham Avenue.",
+    body: "A Khmer kitchen on Buckingham Avenue. Dine in or take away, open from 8:00 am.",
     primaryCta: { label: "Reserve a table", href: "/contact" },
     secondaryCta: { label: "See the menu", href: "#menu" },
     scrollCue: "Scroll",
