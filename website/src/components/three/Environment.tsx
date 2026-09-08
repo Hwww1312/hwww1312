@@ -26,8 +26,8 @@ export function EnvironmentFloor() {
         <meshStandardMaterial color="#04110e" roughness={0.95} metalness={0} />
       </mesh>
       <mesh ref={glow} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.54, 0]}>
-        <circleGeometry args={[2.2, 64]} />
-        <meshBasicMaterial color="#c8dc4b" transparent opacity={0.1} />
+        <circleGeometry args={[1.6, 64]} />
+        <meshBasicMaterial color="#c8dc4b" transparent opacity={0.06} />
       </mesh>
     </group>
   );

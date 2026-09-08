@@ -59,7 +59,7 @@ export function StoryCanvas() {
             alpha: true,
             powerPreference: "high-performance",
           }}
-          camera={{ position: [0.15, 1.35, 3.4], fov: 35, near: 0.1, far: 40 }}
+          camera={{ position: [0.4, 2.4, 2.8], fov: 35, near: 0.1, far: 40 }}
           shadows
           onCreated={() => {
             setReady(true);

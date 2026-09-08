@@ -11,14 +11,13 @@ export function ReducedMotionStory() {
     <div id="story" className="relative z-10">
       <section className="page-shell flex min-h-dvh flex-col justify-end pb-20 pt-28">
         <p className="eyebrow mb-4">{STORY_COPY.hero.eyebrow}</p>
-        <p className="mb-3 font-display text-2xl font-extrabold text-lemongrass">
+        <h1 className="max-w-[12ch] font-display text-[clamp(2.8rem,7vw,5.8rem)] font-extrabold tracking-tighter text-paper">
           {STORY_COPY.hero.title}
+        </h1>
+        <p className="mt-5 max-w-[18ch] font-display text-[clamp(1.4rem,3vw,2.4rem)] font-extrabold leading-tight tracking-tight text-lemongrass">
+          {STORY_COPY.hero.headline}
         </p>
-        <SectionHeading
-          as="h1"
-          title={STORY_COPY.hero.headline}
-          body={STORY_COPY.hero.body}
-        />
+        <p className="lead mt-6">{STORY_COPY.hero.body}</p>
         <div className="mt-9 flex flex-wrap gap-3">
           <Button href="/contact">{STORY_COPY.hero.primaryCta}</Button>
           <Button href={BUSINESS.phoneHref} variant="frame">
