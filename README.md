@@ -27,6 +27,20 @@ tools/render-hero-film.py        renders the 1080p seamless hero loop
 tools/render-og-card.py          renders the 1200x630 OG card
 ```
 
+## Development setup
+
+The authored files here are rendered with two Python tools (`tools/`). To
+prepare a machine to run them:
+
+```bash
+scripts/cloud-agent-install.sh   # installs ffmpeg (if missing) + Python deps
+```
+
+This installs the packages in `requirements.txt` (numpy, Pillow, fonttools,
+Brotli) and ensures `ffmpeg` is available for encoding the hero film. The script
+is idempotent, so it is safe to re-run. It is also the `install` step used by the
+Cloud Agent environment.
+
 ## Regenerating the hero film
 
 `app/public/assets/hero.mp4` and `hero-poster.jpg` are not committed because

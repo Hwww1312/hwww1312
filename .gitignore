@@ -2,3 +2,7 @@ node_modules/
 dist/
 fr/
 *.tar.gz
+__pycache__/
+*.pyc
+film_preview.png
+og.jpg

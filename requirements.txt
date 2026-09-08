@@ -1,0 +1,12 @@
+# Python dependencies for the asset render tools in tools/
+# render-hero-film.py : composes the 1080p hero loop from source-photos/
+# render-og-card.py   : composes the 1200x630 Open Graph card
+#
+# ffmpeg (system package) is also required to encode the hero film; see
+# scripts/cloud-agent-install.sh and the README.
+numpy>=2.0
+Pillow>=11.0
+# fonttools + brotli let render-og-card.py read the self-hosted woff2 faces
+# (convert them to .ttf first, e.g. via fontTools.ttLib, then point OG_FONTS at them)
+fonttools>=4.50
+Brotli>=1.1
