@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS.name}`,
   },
   description:
-    "A Khmer kitchen on Buckingham Avenue, Springvale. Lok lak, beef noodle soup and steamboat, cooked to order. Reserve a table or call the restaurant.",
+    "A Khmer kitchen on Buckingham Avenue, Springvale. Fish curry noodle soup, lok lak and steamboat, cooked to order. Reserve a table or call the restaurant.",
   openGraph: {
     type: "website",
     locale: "en_AU",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: SITE_ORIGIN,
     title: `${BUSINESS.name} | Khmer kitchen in ${BUSINESS.suburb}`,
     description:
-      "Lok lak, beef noodle soup and steamboat on Buckingham Avenue, Springvale. Cooked to order.",
+      "Fish curry noodle soup, lok lak and steamboat on Buckingham Avenue, Springvale. Cooked to order.",
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbf6ec",
-  colorScheme: "light",
+  themeColor: "#100d0b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

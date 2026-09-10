@@ -1,35 +1,48 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * Cambodian Food Stars design tokens.
+ * Cambodian Food Stars — cinematic design tokens.
  *
- * Warm cream ground, dark green ink, a deep jade accent with turmeric
- * for highlights. A serif display face carries the headlines; the body
- * is a neutral grotesque so the two never compete.
+ * A dark charcoal-brown ground, creamy off-white type, warm golden
+ * highlights and a restrained herb green picked out of the dish itself.
+ * The palette is deliberately narrow: the bowl is the only saturated
+ * thing on the page and everything else gets out of its way.
  * ------------------------------------------------------------------ */
 @theme {
-  --color-paper: #fbf6ec;
-  --color-cream: #f2e7d3;
-  --color-cream-deep: #e5d5b8;
+  /* Ground. `paper` is the page itself; the two `cream` steps are the
+     only surfaces that ever lift off it. */
+  --color-paper: #100d0b;
+  --color-cream: #191411;
+  --color-cream-deep: #241b15;
+  --color-void: #070505;
 
-  --color-ink: #16251f;
-  --color-ink-soft: #47574d;
-  --color-ink-faint: #7c8880;
+  /* Type. `ink` reads as creamy off-white, not white: pure white on this
+     ground is glaring and kills the warmth. */
+  --color-ink: #f4ebdd;
+  --color-ink-soft: #b0a291;
+  --color-ink-faint: #786c5f;
 
-  --color-jade: #2a5a4c;
-  --color-jade-deep: #10221c;
-  --color-turmeric: #c4862a;
-  --color-chili: #a33328;
+  /* Accents. Golden-orange carries every action; the green is an accent
+     only, never a surface. */
+  --color-turmeric: #e6a542;
+  --color-turmeric-deep: #f2bc68;
+  --color-jade: #8cc7a0;
+  --color-jade-deep: #a8d9b8;
+  --color-chili: #d4552f;
+  /* Text that sits on a golden slab. */
+  --color-onaccent: #14100b;
 
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* An editorial measure rather than a cinematic one. */
-  --shell: min(1180px, 100% - 2.5rem);
+  /* A wide cinematic measure with real gutters. */
+  --shell: min(1320px, 100% - 2.5rem);
 
-  --text-hero: clamp(2.6rem, 7.4vw, 6rem);
-  --text-chapter: clamp(1.9rem, 4.4vw, 3.5rem);
-  --text-section: clamp(1.5rem, 2.8vw, 2.25rem);
+  /* Oversized editorial scale: the headline is the loudest thing on the
+     page after the bowl. */
+  --text-hero: clamp(2.9rem, 10.2vw, 8.1rem);
+  --text-chapter: clamp(2.3rem, 7.4vw, 6rem);
+  --text-section: clamp(1.45rem, 2.9vw, 2.4rem);
 
   --ease-story: cubic-bezier(0.16, 0.84, 0.36, 1);
 }
@@ -59,12 +72,12 @@
   }
 
   ::selection {
-    background: var(--color-jade);
-    color: var(--color-paper);
+    background: var(--color-turmeric);
+    color: var(--color-onaccent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-jade);
+    outline: 2px solid var(--color-turmeric);
     outline-offset: 3px;
     border-radius: 1px;
   }
@@ -74,8 +87,8 @@
     left: 1rem;
     top: -100%;
     z-index: 100;
-    background: var(--color-jade);
-    color: var(--color-paper);
+    background: var(--color-turmeric);
+    color: var(--color-onaccent);
     padding: 0.75rem 1.25rem;
     font-weight: 600;
     transition: top 150ms var(--ease-story);
@@ -86,44 +99,107 @@
 }
 
 @layer components {
-  /* The page shell, matching the reference's narrower editorial measure. */
   .shell {
     width: var(--shell);
     margin-inline: auto;
   }
 
-  /* Entrance builds run on mount and finish fast, so a full-page capture
-     and a reduced-motion visitor both see finished text. Transform only. */
+  /* The editorial voice: a high-contrast serif set large, upright and
+     tight. Used only for the statements the bowl is allowed to overlap. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: -0.022em;
+    line-height: 0.86;
+    text-wrap: balance;
+  }
+
+  /* Entrance builds. They run on mount, hold their finished state, and
+     transform only — so a screenshot and a reduced-motion visitor both
+     see composed type. Delays are long by design: the food is lit first,
+     the words arrive after. */
   .rise-mask {
     display: block;
     overflow: hidden;
+    padding-block: 0.06em;
+    margin-block: -0.06em;
   }
   .rise {
     display: block;
-    animation: rise 900ms var(--ease-story) both;
+    animation: rise 1200ms var(--ease-story) both;
   }
   @keyframes rise {
     from {
-      transform: translate3d(0, 106%, 0);
+      transform: translate3d(0, 108%, 0);
     }
     to {
       transform: translate3d(0, 0, 0);
     }
   }
 
-  .rule-lines {
-    background-image: repeating-linear-gradient(
+  .fade-up {
+    animation: fade-up 1100ms var(--ease-story) both;
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 1.4rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* A hairline that draws itself outward — used for the ingredient
+     leaders and section rules. */
+  .hairline {
+    background: linear-gradient(
       to right,
-      color-mix(in oklab, var(--color-ink) 10%, transparent) 0 1px,
-      transparent 1px 100%
+      color-mix(in oklab, var(--color-ink) 22%, transparent),
+      transparent
     );
-    background-size: 25% 100%;
+  }
+
+  /* The warm pool of light the bowl floats in. Painted in CSS as well as
+     in the scene so the page never looks flat before WebGL starts. */
+  .glow-warm {
+    background: radial-gradient(
+      55% 46% at var(--glow-x, 62%) var(--glow-y, 48%),
+      rgba(232, 158, 61, 0.17) 0%,
+      rgba(176, 96, 32, 0.09) 34%,
+      rgba(16, 13, 11, 0) 72%
+    );
+  }
+
+  /* A close vignette keeps the eye in frame the way a lens would. */
+  .vignette {
+    background: radial-gradient(
+      78% 62% at 50% 46%,
+      transparent 42%,
+      rgba(7, 5, 5, 0.55) 100%
+    );
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise {
+  .rise,
+  .fade-up {
     animation: none;
+  }
+
+  /* The tall sections exist to give the camera room to travel between poses.
+     With the camera parked they are just empty screens to scroll past, so
+     they collapse to the height of their own content. Unlayered, which is
+     what lets them override the utilities that set those heights. */
+  [data-tall] {
+    min-height: 0;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+  [data-gap] {
+    height: 2rem;
   }
   html {
     scroll-behavior: auto;
@@ -132,7 +208,96 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* The entrance builds are deliberately late so the food is lit before the
+       words arrive. Without clearing the delay too, a reduced-motion visitor
+       waits two seconds in front of a blank hero. */
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ------------------------------------------------------------------ *
+ * Ingredient call-outs.
+ *
+ * Projected from the 3D scene, so the wrapper is a zero-size point sitting on
+ * the ingredient itself and everything is laid out around it in pixels.
+ * `--reach` is written per frame by the scene: it fades the label and draws
+ * the leader outward from the dish.
+ * ------------------------------------------------------------------ */
+.ingredient-label {
+  position: relative;
+  width: 0;
+  height: 0;
+  font-family: var(--font-body);
+  will-change: opacity;
+}
+
+.ingredient-dot {
+  position: absolute;
+  left: -2.5px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-turmeric);
+  box-shadow: 0 0 12px 1px rgba(230, 165, 66, 0.6);
+}
+
+/* A 1px box with visible overflow: the polyline is drawn in raw pixels
+   around the anchor, which is the one coordinate space that matters here. */
+.ingredient-leader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+}
+
+.ingredient-leader polyline {
+  stroke: color-mix(in oklab, var(--color-turmeric) 62%, transparent);
+  stroke-width: 1;
+  /* pathLength is normalised to 1, so the dash offset is the reach itself. */
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--reach, 1));
+}
+
+.ingredient-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 12rem;
+  padding-bottom: 0.35rem;
+}
+
+.ingredient-label[data-side="left"] .ingredient-text {
+  margin-left: -12rem;
+  text-align: right;
+}
+
+/* The call-outs land wherever the dish happens to be, so both lines carry a
+   soft shadow rather than a box: it keeps them legible over the lit ceramic
+   without putting a panel on top of the food. */
+.ingredient-name,
+.ingredient-note {
+  text-shadow:
+    0 1px 10px rgba(7, 5, 5, 0.95),
+    0 0 26px rgba(7, 5, 5, 0.8);
+}
+
+.ingredient-name {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.ingredient-note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--color-ink-soft);
 }

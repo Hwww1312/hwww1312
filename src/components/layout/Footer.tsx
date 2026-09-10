@@ -4,12 +4,14 @@ import { Mark } from "@/components/ui/Mark";
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-ink/15 bg-paper">
+    // Sits above the story canvas, which is fixed and would otherwise keep
+    // painting the bowl over the footer for the length of the page.
+    <footer className="relative z-30 border-t border-ink/15 bg-paper">
       <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24">
         <p className="text-sm uppercase tracking-[0.2em] text-ink-soft">Call the restaurant</p>
         <a
           href={BUSINESS.phoneHref}
-          className="mt-6 block font-[family-name:var(--font-display)] text-[13vw] font-extrabold leading-[0.86] tracking-tighter transition-colors duration-300 hover:text-jade sm:text-[11vw] lg:text-[8.5vw]"
+          className="mt-6 block font-[family-name:var(--font-display)] text-[13vw] font-extrabold leading-[0.86] tracking-tighter transition-colors duration-300 hover:text-turmeric sm:text-[11vw] lg:text-[8.5vw]"
         >
           {BUSINESS.phoneDisplay}
         </a>
@@ -17,7 +19,7 @@ export function Footer() {
         <div className="mt-16 grid grid-cols-1 gap-10 border-t border-ink/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="flex items-center gap-2.5">
-              <Mark className="h-5 w-5 text-jade" />
+              <Mark className="h-5 w-5 text-turmeric" />
               <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-tight">
                 {BUSINESS.name}
               </span>
@@ -32,7 +34,7 @@ export function Footer() {
               href={BUSINESS.mapsDirections}
               target="_blank"
               rel="noreferrer"
-              className="mt-3 inline-block text-ink underline decoration-jade/45 underline-offset-4 hover:decoration-jade"
+              className="mt-3 inline-block text-ink underline decoration-turmeric/45 underline-offset-4 hover:decoration-turmeric"
             >
               Get directions
             </a>

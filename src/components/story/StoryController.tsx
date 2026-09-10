@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { setMeasuredRanges, storyState, resolveStory } from "@/lib/story/state";
+import { setMeasuredRanges, storyState, resolveStory, resolveIntro } from "@/lib/story/state";
 import { CHAPTERS } from "@/data/storyConfig";
 
 /**
@@ -31,6 +31,7 @@ export function StoryController({
     const narrow = window.matchMedia("(max-width: 1023px)");
     storyState.isMobile = narrow.matches;
     storyState.reducedMotion = motion.matches;
+    storyState.skipIntro = window.scrollY > 40;
 
     /**
      * Measure where each chapter section actually sits, and express it as a
@@ -108,6 +109,8 @@ export function StoryController({
           camera: resolved.camera,
           ranges: debugRanges,
           isMobile: storyState.isMobile,
+          grading: storyState.grading,
+          intro: resolveIntro(storyState.elapsed - storyState.startedAt),
         };
       }
       if (resolved.chapterIndex !== lastChapter) {
@@ -119,9 +122,20 @@ export function StoryController({
     const attach = async () => {
       measure();
 
-      // Reduced motion: park the scene on a composed frame and never move it.
+      // Reduced motion: park the scene on the composed hero frame and never
+      // move it again. The canvas is fixed, so it would otherwise sit over the
+      // menu for the rest of the page — it is faded out past the hero instead.
+      // A cross-fade is not motion, and without it the type is unreadable.
       if (motion.matches) {
-        publish(0.03);
+        publish(0);
+        const fade = () => {
+          if (!canvasRef.current) return;
+          const past = window.scrollY / Math.max(1, window.innerHeight * 0.9);
+          canvasRef.current.style.opacity = String(Math.max(0, 1 - past));
+        };
+        fade();
+        window.addEventListener("scroll", fade, { passive: true });
+        cleanup = () => window.removeEventListener("scroll", fade);
         return;
       }
 
@@ -134,7 +148,7 @@ export function StoryController({
         trigger: el,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.55,
+        scrub: 1.15,
         invalidateOnRefresh: true,
         onRefresh: measure,
         onUpdate: (self) => publish(self.progress),

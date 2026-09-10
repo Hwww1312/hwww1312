@@ -11,17 +11,17 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-[1440px] px-5 pb-28 pt-[22vh] sm:px-8">
-      <p className="text-xs font-medium uppercase tracking-[0.28em] text-jade">
+      <p className="text-xs font-medium uppercase tracking-[0.28em] text-turmeric">
         About
       </p>
       <h1 className="mt-5 max-w-[16ch] text-[length:var(--text-chapter)] leading-[0.98]">
-        {STORY.introduction.headline}
+        {STORY.value.headline}
       </h1>
 
       <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
         <div className="space-y-6 text-base leading-relaxed text-ink-soft lg:col-span-6">
-          <p>{STORY.introduction.body}</p>
-          <p>{STORY.transformation.body}</p>
+          <p>{STORY.value.body}</p>
+          <p>{STORY.rotation.body}</p>
           <p>
             The room is on Buckingham Avenue in Springvale. You can eat in or take
             away, and the kitchen is busiest through the evening.

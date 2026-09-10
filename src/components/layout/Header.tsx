@@ -8,7 +8,7 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 h-[72px] bg-gradient-to-b from-paper/95 to-paper/0 backdrop-blur-[2px]">
       <div className="shell flex h-[72px] items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <Mark className="h-6 w-6 text-jade" />
+          <Mark className="h-6 w-6 text-turmeric" />
           <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-tight">
             {BUSINESS.name}
           </span>
@@ -24,7 +24,7 @@ export function Header() {
           </nav>
           <Link
             href="/contact"
-            className="hidden bg-jade px-5 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-jade-deep md:inline-flex"
+            className="hidden bg-turmeric px-5 py-2.5 text-sm font-semibold text-onaccent transition-colors hover:bg-turmeric-deep md:inline-flex"
           >
             Reserve a table
           </Link>

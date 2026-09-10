@@ -7,15 +7,15 @@ const base =
   "inline-flex items-center gap-3 font-medium transition-colors duration-200 active:translate-y-px";
 
 const variants: Record<Variant, string> = {
-  /** Solid jade slab. The single strongest action on any screen. */
+  /** Solid golden slab. The single strongest action on any screen. */
   primary:
-    "bg-jade px-7 py-4 text-base font-semibold text-paper hover:bg-jade-deep",
+    "bg-turmeric px-7 py-4 text-base font-semibold text-onaccent hover:bg-turmeric-deep",
   /** Hairline frame that fills on hover. Always secondary to `primary`. */
   outline:
-    "group relative overflow-hidden border border-ink/35 px-7 py-4 text-base text-ink",
+    "group relative overflow-hidden border border-ink/30 px-7 py-4 text-base text-ink",
   /** Inline text link with an accent rule beneath. */
   inline:
-    "group relative items-baseline gap-1.5 text-ink hover:text-jade",
+    "group relative items-baseline gap-1.5 text-ink hover:text-turmeric",
 };
 
 type Props = {
@@ -39,7 +39,7 @@ export function Button({
       {variant === "outline" && (
         <span
           aria-hidden="true"
-          className="absolute inset-0 origin-bottom scale-y-0 bg-ink/8 transition-transform duration-300 ease-out group-hover:scale-y-100"
+          className="absolute inset-0 origin-bottom scale-y-0 bg-ink/10 transition-transform duration-300 ease-out group-hover:scale-y-100"
         />
       )}
       <span className={variant === "outline" ? "relative" : undefined}>
@@ -48,7 +48,7 @@ export function Button({
       {variant === "inline" && (
         <span
           aria-hidden="true"
-          className="absolute inset-x-0 -bottom-1 h-px bg-jade/45 transition-colors duration-300 group-hover:bg-jade"
+          className="absolute inset-x-0 -bottom-1 h-px bg-turmeric/45 transition-colors duration-300 group-hover:bg-turmeric"
         />
       )}
     </>

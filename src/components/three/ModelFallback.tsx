@@ -1,76 +1,106 @@
 /**
- * Shown when WebGL is unavailable or the visitor asked for reduced motion.
+ * Shown when WebGL is unavailable.
+ *
  * The page must never depend on the canvas to make sense, so this is a real
- * composition: the same celadon plate and fanned skewers the 3D scene builds,
- * drawn flat as vector art. No raster assets, nothing to download.
+ * composition rather than a grey box: the same bowl of curry the 3D scene
+ * builds, drawn flat as vector art in the same palette and lit from the same
+ * side. No raster assets, nothing to download.
  */
 export function ModelFallback() {
-  // Five skewers, alternating beef and pork, fanned the way they settle in
-  // the canvas. Angles and offsets mirror the FLIGHT table in HeroModel.
-  const skewers = [
-    { angle: -19, dy: -46, meat: "#5c2d18" },
-    { angle: -9.5, dy: -23, meat: "#c99062" },
-    { angle: 0, dy: 0, meat: "#69361d" },
-    { angle: 9.5, dy: 23, meat: "#d39c72" },
-    { angle: 19, dy: 46, meat: "#4e2614" },
+  // The garnishes, at the angles they settle at in the modelled dish.
+  const garnish = [
+    { cx: 268, cy: 268, rx: 54, ry: 15, fill: "#4f7d33", rot: -18 },
+    { cx: 352, cy: 258, rx: 50, ry: 14, fill: "#4f7d33", rot: 26 },
+    { cx: 232, cy: 300, rx: 46, ry: 11, fill: "#efe9d8", rot: 8 },
+    { cx: 300, cy: 316, rx: 52, ry: 12, fill: "#d5e5ab", rot: -6 },
+    { cx: 372, cy: 300, rx: 40, ry: 11, fill: "#bf3319", rot: 14 },
+    { cx: 262, cy: 236, rx: 34, ry: 13, fill: "#43843b", rot: -30 },
+    { cx: 338, cy: 226, rx: 30, ry: 12, fill: "#43843b", rot: 22 },
   ];
 
   return (
     // Fixed, matching the canvas it stands in for: an absolutely positioned
     // root would collapse against the unpositioned page wrapper.
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute right-[-8%] top-1/2 h-[64vmin] w-[64vmin] -translate-y-1/2 lg:right-[4%]">
+    <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden" aria-hidden="true">
+      <div className="absolute left-1/2 top-1/2 h-[78vmin] w-[78vmin] -translate-x-1/2 -translate-y-1/2 lg:left-[64%]">
         <svg viewBox="0 0 600 600" className="h-full w-full">
           <defs>
-            <radialGradient id="fb-glaze" cx="42%" cy="34%" r="72%">
-              <stop offset="0%" stopColor="#b9cdc0" />
-              <stop offset="58%" stopColor="#95ac9d" />
-              <stop offset="100%" stopColor="#6f8a7b" />
+            <radialGradient id="fb-pool" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#ffb258" stopOpacity="0.3" />
+              <stop offset="55%" stopColor="#b0601f" stopOpacity="0.11" />
+              <stop offset="100%" stopColor="#100d0b" stopOpacity="0" />
             </radialGradient>
-            <radialGradient id="fb-shadow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#16251f" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#16251f" stopOpacity="0" />
+            <radialGradient id="fb-broth" cx="38%" cy="30%" r="78%">
+              <stop offset="0%" stopColor="#f6bc55" />
+              <stop offset="52%" stopColor="#d8952a" />
+              <stop offset="100%" stopColor="#8f5711" />
             </radialGradient>
-            <linearGradient id="fb-steel" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#8d949a" />
-              <stop offset="50%" stopColor="#d5dade" />
-              <stop offset="100%" stopColor="#8d949a" />
+            <linearGradient id="fb-glaze" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0%" stopColor="#f4ece0" />
+              <stop offset="46%" stopColor="#d9cfbd" />
+              <stop offset="100%" stopColor="#6f6355" />
             </linearGradient>
+            <radialGradient id="fb-shadow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
-          <ellipse cx="300" cy="366" rx="228" ry="62" fill="url(#fb-shadow)" />
-          <ellipse cx="300" cy="318" rx="212" ry="82" fill="#6f8a7b" opacity="0.55" />
-          <ellipse cx="300" cy="306" rx="212" ry="82" fill="url(#fb-glaze)" />
-          <ellipse
-            cx="300"
-            cy="304"
-            rx="164"
-            ry="60"
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.22"
-          />
+          {/* The pool of warm light the bowl floats in. */}
+          <circle cx="300" cy="290" r="290" fill="url(#fb-pool)" />
+          <ellipse cx="300" cy="430" rx="196" ry="44" fill="url(#fb-shadow)" />
 
-          {skewers.map(({ angle, dy, meat }, i) => (
-            <g key={i} transform={`translate(300 ${296 + dy}) rotate(${angle})`}>
-              <rect x="-176" y="-2.4" width="352" height="4.8" rx="2.4" fill="url(#fb-steel)" />
-              {[-96, -48, 0, 48, 96].map((x, j) => (
-                <ellipse
-                  key={j}
-                  cx={x}
-                  cy={j % 2 ? -1.5 : 1.5}
-                  rx="25"
-                  ry="15"
-                  fill={meat}
-                  stroke="#16251f"
-                  strokeOpacity="0.18"
-                />
-              ))}
-            </g>
+          {/* The bowl, then the curry, then what is laid over it. */}
+          <path
+            d="M92 268 A208 208 0 0 0 508 268 A208 96 0 0 1 92 268 Z"
+            fill="url(#fb-glaze)"
+          />
+          <ellipse cx="300" cy="268" rx="208" ry="96" fill="#efe7da" />
+          <ellipse cx="300" cy="272" rx="176" ry="79" fill="url(#fb-broth)" />
+
+          {/* Rice noodles, coiled under everything else. */}
+          {[0, 1, 2, 3].map((i) => (
+            <ellipse
+              key={i}
+              cx={300 + (i - 1.5) * 18}
+              cy={278 + (i % 2) * 10}
+              rx={92 - i * 9}
+              ry={30 - i * 2}
+              fill="none"
+              stroke="#f1e6cf"
+              strokeOpacity="0.72"
+              strokeWidth="5"
+              transform={`rotate(${i * 24 - 30} 300 278)`}
+            />
           ))}
+
+          {garnish.map((g, i) => (
+            <ellipse
+              key={i}
+              cx={g.cx}
+              cy={g.cy}
+              rx={g.rx}
+              ry={g.ry}
+              fill={g.fill}
+              transform={`rotate(${g.rot} ${g.cx} ${g.cy})`}
+            />
+          ))}
+
+          {/* Lime, and the specular the key light leaves on the rim. */}
+          <path d="M404 246 a44 44 0 0 1 42 26 l-42 6 Z" fill="#d9e68b" />
+          <ellipse
+            cx="252"
+            cy="212"
+            rx="86"
+            ry="20"
+            fill="none"
+            stroke="#fff3dd"
+            strokeOpacity="0.5"
+            strokeWidth="3"
+            transform="rotate(-16 252 212)"
+          />
         </svg>
       </div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_50%,transparent_0%,rgba(251,246,236,0.62)_46%,#fbf6ec_72%)]" />
     </div>
   );
 }

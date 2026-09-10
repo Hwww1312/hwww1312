@@ -7,9 +7,10 @@ import { StoryProgress } from "./StoryProgress";
 import { StoryContent } from "./StoryContent";
 
 /**
- * Composes the story: the semantic HTML, the persistent canvas behind it, and
- * the controller that binds scroll to the scene. The HTML renders on the
- * server and is complete on its own; everything here is enhancement.
+ * Composes the story: the semantic HTML, the persistent canvas that runs
+ * through the middle of it, and the controller that binds scroll to the
+ * scene. The HTML renders on the server and is complete on its own;
+ * everything else here is enhancement.
  */
 export function StoryExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +34,12 @@ export function StoryExperience() {
 
   return (
     <div ref={containerRef} className="relative">
+      {/* The pool of warm light, painted in CSS so the page is never a flat
+          black rectangle in the moment before WebGL starts. */}
+      <div
+        aria-hidden="true"
+        className="glow-warm pointer-events-none fixed inset-0 z-0"
+      />
       <StoryCanvas ref={canvasRef} inView={inView} />
       <StoryController
         containerRef={containerRef}

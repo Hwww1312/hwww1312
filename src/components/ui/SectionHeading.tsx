@@ -14,7 +14,7 @@ export function SectionHeading({
   return (
     <div className={className}>
       {eyebrow && (
-        <p className="mb-5 text-xs font-medium uppercase tracking-[0.28em] text-jade">
+        <p className="mb-5 text-xs font-medium uppercase tracking-[0.28em] text-turmeric">
           {eyebrow}
         </p>
       )}

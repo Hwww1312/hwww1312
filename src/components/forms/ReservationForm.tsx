@@ -29,7 +29,7 @@ function Field({
       {children}
       {hint && !error && <span className="text-xs text-ink-soft">{hint}</span>}
       {error && (
-        <span id={`${name}-error`} role="alert" className="text-xs text-jade">
+        <span id={`${name}-error`} role="alert" className="text-xs text-chili">
           {error}
         </span>
       )}
@@ -38,8 +38,8 @@ function Field({
 }
 
 const control =
-  "w-full border border-ink/25 bg-cream px-4 py-3 text-base text-ink " +
-  "placeholder:text-ink-faint focus:border-jade focus:outline-none";
+  "w-full border border-ink/20 bg-cream px-4 py-3 text-base text-ink " +
+  "placeholder:text-ink-faint focus:border-turmeric focus:outline-none";
 
 export function ReservationForm() {
   const [state, formAction, pending] = useActionState(submitReservation, initial);
@@ -124,7 +124,7 @@ export function ReservationForm() {
         <button
           type="submit"
           disabled={pending}
-          className="bg-jade px-7 py-4 text-base font-semibold text-paper transition-colors hover:bg-jade-deep active:translate-y-px disabled:opacity-60"
+          className="bg-turmeric px-7 py-4 text-base font-semibold text-onaccent transition-colors hover:bg-turmeric-deep active:translate-y-px disabled:opacity-60"
         >
           {pending ? "Sending..." : "Request a table"}
         </button>

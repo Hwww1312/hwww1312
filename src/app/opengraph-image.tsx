@@ -6,20 +6,22 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 /**
- * Drawn at build time rather than shipped as a photograph: the same celadon
- * plate and fanned skewers as the hero, reduced to flat shapes that survive
- * the small crops social cards use.
+ * Drawn at build time rather than shipped as a photograph: the same bowl of
+ * fish curry noodle soup as the hero, reduced to flat shapes that survive the
+ * small crops social cards use, on the same dark ground as the page.
  */
 export default function OpengraphImage() {
-  // Five skewers fanned across the plate, beef dark and pork light, the same
-  // read as the hero. Each row is placed absolutely and rotated about its own
-  // centre, because Satori has no SVG transform to lean on.
-  const skewers = [
-    { rotate: -13, top: 208, meat: "#5c2d18" },
-    { rotate: -6.5, top: 262, meat: "#c99062" },
-    { rotate: 0, top: 316, meat: "#69361d" },
-    { rotate: 6.5, top: 370, meat: "#d39c72" },
-    { rotate: 13, top: 424, meat: "#4e2614" },
+  // The garnishes, laid over the curry at the angles they settle at in the
+  // modelled dish. Each is placed absolutely and rotated about its own centre,
+  // because Satori has no SVG transform to lean on.
+  const garnish = [
+    { left: 92, top: 96, w: 150, h: 30, rotate: -17, color: "#4f7d33" },
+    { left: 254, top: 74, w: 138, h: 28, rotate: 24, color: "#4f7d33" },
+    { left: 60, top: 176, w: 128, h: 22, rotate: 7, color: "#efe9d8" },
+    { left: 190, top: 206, w: 146, h: 24, rotate: -6, color: "#d5e5ab" },
+    { left: 316, top: 168, w: 112, h: 22, rotate: 15, color: "#bf3319" },
+    { left: 148, top: 40, w: 92, h: 26, rotate: -32, color: "#43843b" },
+    { left: 286, top: 30, w: 84, h: 24, rotate: 20, color: "#43843b" },
   ];
 
   return new ImageResponse(
@@ -29,69 +31,83 @@ export default function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#fbf6ec",
-          color: "#16251f",
+          background: "#100d0b",
+          color: "#f4ebdd",
           position: "relative",
           overflow: "hidden",
           fontFamily: "Georgia, serif",
         }}
       >
-        {/* The plate, held fully inside the frame so no crop clips it. */}
+        {/* The pool of warm light the bowl floats in. */}
         <div
           style={{
             position: "absolute",
-            right: 24,
-            top: 138,
-            width: 552,
-            height: 350,
+            right: -60,
+            top: -110,
+            width: 860,
+            height: 860,
             borderRadius: "50%",
-            background: "#95ac9d",
+            background:
+              "radial-gradient(circle, rgba(230,165,66,0.22) 0%, rgba(176,96,32,0.09) 42%, rgba(16,13,11,0) 70%)",
             display: "flex",
           }}
         />
-        {skewers.map(({ rotate, top, meat }, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              right: 40,
-              top,
-              width: 512,
-              height: 30,
-              display: "flex",
-              alignItems: "center",
-              transform: `rotate(${rotate}deg)`,
-            }}
-          >
-            {/* the stick, running the full length behind the meat */}
+
+        {/* The bowl, held fully inside the frame so no crop clips it. */}
+        <div
+          style={{
+            position: "absolute",
+            right: 42,
+            top: 132,
+            width: 528,
+            height: 340,
+            borderRadius: "50%",
+            background: "#e9e1d2",
+            display: "flex",
+          }}
+        />
+        {/* The curry. */}
+        <div
+          style={{
+            position: "absolute",
+            right: 76,
+            top: 158,
+            width: 460,
+            height: 288,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at 36% 28%, #f6bc55 0%, #d8952a 52%, #8f5711 100%)",
+            display: "flex",
+          }}
+        />
+        {/* And what is laid over it. */}
+        <div
+          style={{
+            position: "absolute",
+            right: 76,
+            top: 158,
+            width: 460,
+            height: 288,
+            display: "flex",
+          }}
+        >
+          {garnish.map((g, i) => (
             <div
+              key={i}
               style={{
                 position: "absolute",
-                left: 0,
-                top: 13,
-                width: 540,
-                height: 5,
-                borderRadius: 3,
-                background: "#b8945a",
+                left: g.left,
+                top: g.top,
+                width: g.w,
+                height: g.h,
+                borderRadius: g.h / 2,
+                background: g.color,
+                transform: `rotate(${g.rotate}deg)`,
                 display: "flex",
               }}
             />
-            {[0, 1, 2, 3].map((j) => (
-              <div
-                key={j}
-                style={{
-                  position: "absolute",
-                  left: 66 + j * 108,
-                  width: 92,
-                  height: 30,
-                  borderRadius: 15,
-                  background: meat,
-                  display: "flex",
-                }}
-              />
-            ))}
-          </div>
-        ))}
+          ))}
+        </div>
 
         <div
           style={{
@@ -108,25 +124,45 @@ export default function OpengraphImage() {
               fontSize: 26,
               letterSpacing: 8,
               textTransform: "uppercase",
-              color: "#2a5a4c",
+              color: "#e6a542",
               display: "flex",
             }}
           >
             {BUSINESS.suburb}
           </div>
-          <div style={{ fontSize: 96, lineHeight: 1.02, marginTop: 22, display: "flex" }}>
-            {BUSINESS.name}
-          </div>
           <div
             style={{
-              fontSize: 32,
-              marginTop: 26,
-              color: "#47574d",
-              maxWidth: 540,
+              fontSize: 104,
+              lineHeight: 1,
+              marginTop: 22,
+              textTransform: "uppercase",
+              letterSpacing: -2,
               display: "flex",
             }}
           >
-            A Khmer kitchen on Buckingham Avenue. Dine in or take away, from{" "}
+            A taste of
+          </div>
+          <div
+            style={{
+              fontSize: 104,
+              lineHeight: 1,
+              textTransform: "uppercase",
+              letterSpacing: -2,
+              display: "flex",
+            }}
+          >
+            Cambodia.
+          </div>
+          <div
+            style={{
+              fontSize: 30,
+              marginTop: 28,
+              color: "#b0a291",
+              maxWidth: 520,
+              display: "flex",
+            }}
+          >
+            {BUSINESS.name}, Buckingham Avenue. Dine in or take away, from{" "}
             {BUSINESS.openingTime}.
           </div>
         </div>

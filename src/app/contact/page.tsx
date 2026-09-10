@@ -13,7 +13,7 @@ export default function ContactPage() {
     <div className="mx-auto max-w-[1440px] px-5 pb-28 pt-[22vh] sm:px-8">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
-          <p className="text-xs font-medium uppercase tracking-[0.28em] text-jade">
+          <p className="text-xs font-medium uppercase tracking-[0.28em] text-turmeric">
             Reserve
           </p>
           <h1 className="mt-5 max-w-[14ch] text-[length:var(--text-chapter)] leading-[0.98]">

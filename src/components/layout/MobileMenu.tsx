@@ -79,7 +79,7 @@ export function MobileMenu() {
             ))}
             <a
               href={BUSINESS.phoneHref}
-              className="mt-8 bg-jade px-7 py-4 text-center text-base font-semibold text-paper"
+              className="mt-8 bg-turmeric px-7 py-4 text-center text-base font-semibold text-onaccent"
             >
               Call {BUSINESS.phoneDisplay}
             </a>
