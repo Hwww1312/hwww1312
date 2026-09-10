@@ -172,13 +172,13 @@ export function HeroModel() {
         >
           <mesh geometry={geometries[piece.kind]} material={materials[piece.kind]} castShadow receiveShadow />
           {piece.kind === "bowl" && (
-            <mesh position={[0, 0.34, 0]} material={materials.broth}>
+            <mesh position={[0, 0.34, 0]} rotation={[-Math.PI / 2, 0, 0]} material={materials.broth}>
               <circleGeometry args={[0.6, 48]} />
             </mesh>
           )}
           {piece.kind === "pot" && (
             <>
-              <mesh position={[0, 0.4, 0]} material={materials.soup}>
+              <mesh position={[0, 0.4, 0]} rotation={[-Math.PI / 2, 0, 0]} material={materials.soup}>
                 <circleGeometry args={[0.74, 48]} />
               </mesh>
               <mesh position={[0, -0.06, 0]} material={materials.pot}>
