@@ -36,38 +36,8 @@ export const POT_PROFILE = [
   [0.9, 0.47], [0.86, 0.485], [0.82, 0.44], [0.8, 0.2], [0.72, 0.075], [0.0, 0.045],
 ] as const;
 
-/**
- * Push vertices around with a seeded offset so a grilled chunk never reads as
- * a smooth ball. The seed keeps it identical between server and client.
- */
-export function roughen(geo: THREE.BufferGeometry, amount: number, seed: number) {
-  const pos = geo.attributes.position as THREE.BufferAttribute;
-  let s = seed || 1;
-  const rnd = () => {
-    s = Math.sin(s * 127.1) * 43758.5453;
-    return s - Math.floor(s);
-  };
-  for (let i = 0; i < pos.count; i += 1) {
-    pos.setXYZ(
-      i,
-      pos.getX(i) * (1 + (rnd() - 0.5) * amount),
-      pos.getY(i) * (1 + (rnd() - 0.5) * amount),
-      pos.getZ(i) * (1 + (rnd() - 0.5) * amount),
-    );
-  }
-  pos.needsUpdate = true;
-  geo.computeVertexNormals();
-  return geo;
-}
-
 /** Celadon, so the crockery holds against the warm cream page. */
-export const GLAZE = { plate: "#95ac9d", bowl: "#86a294", side: "#8ea89a" } as const;
-
-/** Beef reads dark, pork reads light, so the two are told apart at a glance. */
-export const MEAT = {
-  beef: ["#5c2d18", "#69361d", "#4e2614", "#63311a"],
-  pork: ["#c99062", "#d39c72", "#bc835a", "#d8a67e"],
-} as const;
+export const GLAZE = { plate: "#86a08f", bowl: "#769384", side: "#8ea89a" } as const;
 
 export function glazeMaterial(color: THREE.ColorRepresentation) {
   return new THREE.MeshPhysicalMaterial({

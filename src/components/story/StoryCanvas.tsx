@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Suspense, forwardRef, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import { ModelFallback } from "@/components/three/ModelFallback";
 import { storyState } from "@/lib/story/state";
 
@@ -43,7 +44,9 @@ export const StoryCanvas = forwardRef<HTMLDivElement, { inView: boolean }>(funct
     // Coarse pointer plus few cores is a reasonable proxy for a phone that
     // will not enjoy contact shadows.
     const cores = navigator.hardwareConcurrency ?? 8;
-    setLowPower(window.matchMedia("(pointer: coarse)").matches || cores <= 4);
+    // Four cores is ordinary desktop hardware in 2025, so it is not on its
+    // own a reason to strip the scene back.
+    setLowPower(window.matchMedia("(pointer: coarse)").matches || cores <= 2);
 
     const onVisibility = () => setVisible(!document.hidden);
     document.addEventListener("visibilitychange", onVisibility);
@@ -64,15 +67,22 @@ export const StoryCanvas = forwardRef<HTMLDivElement, { inView: boolean }>(funct
           // away, so the page never burns battery in the background.
           frameloop={visible && inView ? "always" : "never"}
           dpr={[1, lowPower ? 1.5 : 2]}
-          shadows={!lowPower}
           gl={{ antialias: !lowPower, powerPreference: "high-performance", alpha: true }}
-          camera={{ position: [0, 1.15, 5.1], fov: 34, near: 0.1, far: 60 }}
-          onCreated={() => {
+          // Shadows stay on everywhere: the cast shadow is what grounds the
+          // plate, so it is resolution that gives way on weak hardware, not the
+          // shadow itself.
+          shadows="soft"
+          // Filmic, so highlights on the glaze roll off instead of clipping
+          // flat to white the way they do under linear mapping.
+          onCreated={({ gl }) => {
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 1.0;
             storyState.ready = true;
           }}
+          camera={{ position: [0, 1.15, 5.1], fov: 34, near: 0.1, far: 60 }}
         >
           <Suspense fallback={null}>
-            <StoryScene shadows={!lowPower} />
+            <StoryScene lowPower={lowPower} />
           </Suspense>
         </Canvas>
       )}

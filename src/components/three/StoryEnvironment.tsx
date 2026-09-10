@@ -1,24 +1,70 @@
 "use client";
 
-import { Environment, Lightformer } from "@react-three/drei";
+import { useEffect } from "react";
+import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
 
 /**
- * The reflection environment is built from light shapes rather than an HDRI
- * download: no third-party CDN at runtime, and the highlights across the glaze
- * are art-directed to match the page rather than borrowed from a studio map.
- * Tuned for the cream ground, so the crockery reflects a bright room.
+ * A painted studio environment rather than a downloaded HDRI: no third-party
+ * CDN at runtime, and the highlights are art-directed.
+ *
+ * It is deliberately dark. scene.environment feeds diffuse irradiance as well
+ * as specular, so a bright map floods the shadow side and throws away the
+ * contrast the whole look depends on. The overall level stays low; the small
+ * hot softbox is what puts a wet highlight on the glaze and the meat.
  */
 export function StoryEnvironment() {
-  return (
-    <Environment resolution={256} frames={1}>
-      <color attach="background" args={["#f2e7d3"]} />
-      {/* Broad overhead softbox: daylight across the table. */}
-      <Lightformer intensity={2.6} position={[0, 5, 1]} rotation={[Math.PI / 2, 0, 0]} scale={[10, 7, 1]} color="#fffaf0" />
-      {/* Warm bounce off the timber tabletop. */}
-      <Lightformer intensity={1.3} position={[0, -2.4, 2]} rotation={[-Math.PI / 2, 0, 0]} scale={[8, 5, 1]} color="#e0c89e" />
-      {/* Cool window light from the side, so the glaze has somewhere to look. */}
-      <Lightformer intensity={1.4} position={[-4.6, 1.4, -2.6]} rotation={[0, Math.PI / 2, 0]} scale={[5, 4, 1]} color="#dfeee6" />
-      <Lightformer intensity={0.9} position={[4.6, 1.6, -2]} rotation={[0, -Math.PI / 2, 0]} scale={[4, 3, 1]} color="#f6ead6" />
-    </Environment>
-  );
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+
+  useEffect(() => {
+    const W = 512;
+    const H = 256;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const x = c.getContext("2d") as CanvasRenderingContext2D;
+
+    const sky = x.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, "#6f6455");
+    sky.addColorStop(0.4, "#3b352d");
+    sky.addColorStop(0.62, "#221e19");
+    sky.addColorStop(1, "#0b0a09");
+    x.fillStyle = sky;
+    x.fillRect(0, 0, W, H);
+
+    // the key softbox, and a smaller cool one opposite it
+    const box = (cx: number, cy: number, rx: number, ry: number, col: string, a: string) => {
+      const g = x.createRadialGradient(cx, cy, 1, cx, cy, Math.max(rx, ry));
+      g.addColorStop(0, col.replace("A", a));
+      g.addColorStop(1, col.replace("A", "0"));
+      x.save();
+      x.translate(cx, cy);
+      x.scale(1, ry / rx);
+      x.translate(-cx, -cy);
+      x.fillStyle = g;
+      x.beginPath();
+      x.arc(cx, cy, Math.max(rx, ry), 0, 7);
+      x.fill();
+      x.restore();
+    };
+    box(W * 0.3, H * 0.2, 118, 74, "rgba(255,252,244,A)", "1");
+    box(W * 0.78, H * 0.34, 74, 54, "rgba(186,214,226,A)", ".55");
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    const pmrem = new THREE.PMREMGenerator(gl);
+    pmrem.compileEquirectangularShader();
+    const env = pmrem.fromEquirectangular(tex).texture;
+    pmrem.dispose();
+    tex.dispose();
+
+    scene.environment = env;
+    return () => {
+      scene.environment = null;
+      env.dispose();
+    };
+  }, [gl, scene]);
+
+  return null;
 }

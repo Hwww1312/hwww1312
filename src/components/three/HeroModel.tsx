@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import {
-  BOWL_PROFILE, GLAZE, MEAT, PLATE_PROFILE, POT_PROFILE,
-  brothMaterial, glazeMaterial, roughen, steelMaterial, vesselGeometry,
+  BOWL_PROFILE, GLAZE, PLATE_PROFILE, POT_PROFILE,
+  brothMaterial, glazeMaterial, steelMaterial, vesselGeometry,
 } from "@/lib/three/ceramics";
+import { type MeatKind, meatGeometry, meatSurface } from "@/lib/three/meat";
 import { resolveStory, storyState } from "@/lib/story/state";
 
 /**
@@ -18,7 +19,7 @@ import { resolveStory, storyState } from "@/lib/story/state";
  */
 
 const SKEWER_COUNT = 5;
-const KINDS: ("beef" | "pork")[] = ["beef", "pork", "beef", "pork", "beef"];
+const KINDS: MeatKind[] = ["beef", "pork", "beef", "pork", "beef"];
 
 interface Piece {
   kind: "plate" | "bowl" | "pot" | "side";
@@ -52,27 +53,60 @@ const FLIGHT = Array.from({ length: SKEWER_COUNT }, (_, i) => {
   };
 });
 
-function useSkewerParts() {
+/**
+ * Four painted variants per kind is enough that the eye stops finding
+ * repeats, and cheap enough to build on the main thread at load.
+ */
+function useSkewerParts(maxAniso: number) {
   return useMemo(() => {
-    const stickGeo = new THREE.CylinderGeometry(0.019, 0.017, 1.42, 10);
-    const stickMat = new THREE.MeshStandardMaterial({ color: "#b8945a", roughness: 0.8 });
-    const charMat = new THREE.MeshStandardMaterial({
-      color: "#3a2416", roughness: 0.8, transparent: true, opacity: 0.34,
+    const stickGeo = new THREE.CylinderGeometry(0.0105, 0.008, 1.46, 10);
+    const stickMat = new THREE.MeshStandardMaterial({
+      color: "#7a5f34", roughness: 0.88, metalness: 0, envMapIntensity: 0.25,
     });
-    // Four chunks per skewer, each roughened with its own seed.
+
+    const cache = new Map<string, THREE.MeshStandardMaterial>();
+    const material = (kind: MeatKind, seed: number) => {
+      const key = `${kind}:${seed % 4}`;
+      let base = cache.get(key);
+      if (!base) {
+        const t = meatSurface(kind, seed);
+        const tex = (cv: HTMLCanvasElement, srgb: boolean) => {
+          const tx = new THREE.CanvasTexture(cv);
+          tx.anisotropy = maxAniso;
+          if (srgb) tx.colorSpace = THREE.SRGBColorSpace;
+          return tx;
+        };
+        base = new THREE.MeshStandardMaterial({
+          map: tex(t.alb, true),
+          roughnessMap: tex(t.rgh, false),
+          bumpMap: tex(t.bmp, false),
+          bumpScale: 0.06,
+          roughness: 1,
+          metalness: 0,
+          envMapIntensity: 0.55,
+        });
+        cache.set(key, base);
+      }
+      // one shared painted surface, tinted per chunk so four cubes on a
+      // skewer are not the same cube four times
+      const m = base.clone();
+      m.color.setScalar(0.86 + ((seed * 37) % 13) / 13 * 0.26);
+      return m;
+    };
+
     const chunks = KINDS.map((kind, s) =>
-      Array.from({ length: 4 }, (_, i) => ({
-        geo: roughen(new THREE.IcosahedronGeometry(0.098, 1), 0.28, (s + 1) * 7 + i * 3 + 1),
-        char: roughen(new THREE.IcosahedronGeometry(0.08, 1), 0.32, (s + 1) * 11 + i),
-        mat: new THREE.MeshStandardMaterial({
-          color: MEAT[kind][i % MEAT[kind].length], roughness: 0.66, metalness: 0.03,
-        }),
-        x: -0.405 + i * 0.27,
-        rot: [(s + 1) + i, (s + 1) * 2 + i, (s + 1) * 3 + i] as const,
-      })),
+      Array.from({ length: 4 }, (_, i) => {
+        const seed = (s + 1) * 4 + i;
+        return {
+          geo: meatGeometry(0.104 + ((seed * 29) % 7) / 7 * 0.016, seed),
+          mat: material(kind, seed),
+          x: -0.405 + i * 0.27,
+          rot: [(seed % 7) * 0.9, (seed % 5) * 1.3, (seed % 3) * 0.7] as const,
+        };
+      }),
     );
-    return { stickGeo, stickMat, charMat, chunks };
-  }, []);
+    return { stickGeo, stickMat, chunks };
+  }, [maxAniso]);
 }
 
 export function HeroModel() {
@@ -80,7 +114,8 @@ export function HeroModel() {
   const pieceRefs = useRef<(THREE.Group | null)[]>([]);
   const skewerRefs = useRef<(THREE.Group | null)[]>([]);
   const bench = useRef<THREE.Mesh>(null);
-  const parts = useSkewerParts();
+  const maxAniso = useThree((state) => state.gl.capabilities.getMaxAnisotropy());
+  const parts = useSkewerParts(maxAniso);
 
   const geometries = useMemo(
     () => ({
@@ -116,7 +151,6 @@ export function HeroModel() {
     g.scale.setScalar(model.scale);
 
     const spread = model.spread;
-    if (bench.current) bench.current.scale.setScalar(1 + spread * 0.55);
 
     PIECES.forEach((piece, i) => {
       const node = pieceRefs.current[i];
@@ -160,7 +194,7 @@ export function HeroModel() {
     <group ref={group} dispose={null}>
       {/* the pass the plate rests on, kept close to the page ground */}
       <mesh ref={bench} position={[0, -0.055, 0]} material={materials.bench} receiveShadow>
-        <cylinderGeometry args={[1.18, 1.18, 0.055, 64]} />
+        <cylinderGeometry args={[9, 9, 0.05, 80]} />
       </mesh>
 
       {PIECES.map((piece, i) => (
@@ -197,24 +231,23 @@ export function HeroModel() {
             skewerRefs.current[s] = el;
           }}
         >
-          <mesh geometry={parts.stickGeo} material={parts.stickMat} rotation={[0, 0, Math.PI / 2]} />
+          <mesh
+            geometry={parts.stickGeo}
+            material={parts.stickMat}
+            rotation={[0, 0, Math.PI / 2]}
+            castShadow
+          />
           {parts.chunks[s].map((c, i) => (
-            <group key={i}>
-              <mesh
-                geometry={c.geo}
-                material={c.mat}
-                position={[c.x, 0, 0]}
-                scale={[1.2, 0.9, 1.02]}
-                rotation={[c.rot[0], c.rot[1], c.rot[2]]}
-                castShadow
-              />
-              <mesh
-                geometry={c.char}
-                material={parts.charMat}
-                position={[c.x, 0.045, 0]}
-                scale={[1.16, 0.44, 0.98]}
-              />
-            </group>
+            <mesh
+              key={i}
+              geometry={c.geo}
+              material={c.mat}
+              position={[c.x, 0, 0]}
+              scale={[1.06, 0.92, 1]}
+              rotation={[c.rot[0], c.rot[1], c.rot[2]]}
+              castShadow
+              receiveShadow
+            />
           ))}
         </group>
       ))}

@@ -7,7 +7,9 @@ export function HeroChapter() {
     <section
       id="reveal"
       aria-labelledby="hero-heading"
-      className="relative flex min-h-dvh flex-col justify-end pb-20 pt-28 sm:pb-28"
+      // On a phone the object sits above the type rather than beside it, so
+      // the hero clears a real band for it before the copy starts.
+      className="relative flex min-h-dvh flex-col justify-end pb-20 pt-[26rem] sm:pb-28 lg:pt-28"
     >
       <div className="shell">
         <span className="rise-mask">

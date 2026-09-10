@@ -2,23 +2,21 @@
 
 import { Suspense } from "react";
 import { Preload } from "@react-three/drei";
-import { GroundShadow } from "@/components/three/GroundShadow";
 import { HeroModel } from "@/components/three/HeroModel";
 import { Lighting } from "@/components/three/Lighting";
 import { StoryEnvironment } from "@/components/three/StoryEnvironment";
 import { CameraRig } from "@/components/three/CameraRig";
 
-export function StoryScene({ shadows }: { shadows: boolean }) {
+export function StoryScene({ lowPower }: { lowPower: boolean }) {
   return (
     <>
       <CameraRig />
-      <Lighting />
+      <Lighting lowPower={lowPower} />
       <Suspense fallback={null}>
         <StoryEnvironment />
         <HeroModel />
         <Preload all />
       </Suspense>
-      {shadows && <GroundShadow />}
     </>
   );
 }

@@ -76,13 +76,13 @@ export const CHAPTERS: Chapter[] = [
     // Fallback ranges only. The controller measures the real sections and
     // overrides these, because the menu gallery is several viewports tall.
     range: [0, 0.091],
-    camera: { position: [0, 1.0, 5.6], target: [0.3, -0.2, 0], fov: 34 },
-    model: { position: [1.78, -0.42, 0], rotation: [0.62, -0.35, 0], scale: 0.66, spread: 0 },
+    camera: { position: [0, 0.78, 3.25], target: [0.62, -0.16, 0], fov: 32 },
+    model: { position: [1.92, -0.26, 0], rotation: [0.16, -0.42, 0], scale: 1.06, spread: 0 },
     lighting: { ambient: 0.51, keyIntensity: 1.82, keyPosition: [2.8, 4.0, 2.4], rimIntensity: 0.4, keyWarmth: 0.5 },
     veil: 0,
     mobile: {
-      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
-      model: { position: [0, 0.62, 0], scale: 0.5 },
+      camera: { position: [0, 2.05, 3.5], target: [0, -0.38, 0], fov: 36 },
+      model: { position: [0, 0.1, 0], scale: 0.42 },
     },
   },
   {
@@ -90,13 +90,13 @@ export const CHAPTERS: Chapter[] = [
     domId: "story",
     label: "02 / Discover",
     range: [0.091, 0.182],
-    camera: { position: [2.1, 1.3, 5.2], target: [0.35, -0.15, 0], fov: 34 },
-    model: { position: [1.7, -0.32, 0], rotation: [0.4, 0.6, 0.04], scale: 0.62, spread: 0 },
+    camera: { position: [1.15, 0.9, 3.35], target: [0.62, -0.12, 0], fov: 32 },
+    model: { position: [1.88, -0.22, 0], rotation: [0.13, 0.55, 0.03], scale: 1.0, spread: 0 },
     lighting: { ambient: 0.58, keyIntensity: 1.68, keyPosition: [3.6, 3.5, 1.6], rimIntensity: 0.45, keyWarmth: 0.38 },
     veil: 0.05,
     mobile: {
-      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
-      model: { position: [0, 0.58, 0], scale: 0.48 },
+      camera: { position: [0, 2.05, 3.5], target: [0, -0.38, 0], fov: 36 },
+      model: { position: [0, 0.08, 0], scale: 0.4 },
     },
   },
   {
@@ -104,13 +104,13 @@ export const CHAPTERS: Chapter[] = [
     domId: "detail",
     label: "03 / The detail",
     range: [0.182, 0.455],
-    camera: { position: [-0.2, 0.85, 4.6], target: [0.35, -0.25, 0], fov: 30 },
-    model: { position: [1.72, -0.45, 0], rotation: [0.28, 1.6, -0.04], scale: 0.7, spread: 0 },
+    camera: { position: [-0.15, 0.7, 3.0], target: [0.62, -0.18, 0], fov: 30 },
+    model: { position: [1.86, -0.28, 0], rotation: [0.1, 1.62, 0], scale: 1.14, spread: 0 },
     lighting: { ambient: 0.47,  keyIntensity: 2.1, keyPosition: [-1.6, 3.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.55 },
     veil: 0.28,
     mobile: {
-      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
-      model: { position: [0, 0.62, 0], scale: 0.52 },
+      camera: { position: [0, 2.05, 3.5], target: [0, -0.38, 0], fov: 36 },
+      model: { position: [0, 0.1, 0], scale: 0.44 },
     },
   },
   {
@@ -148,13 +148,13 @@ export const CHAPTERS: Chapter[] = [
     domId: "final",
     label: "06 / The invitation",
     range: [0.909, 1],
-    camera: { position: [0, 0.7, 5.2], target: [0, -1.0, 0], fov: 32 },
-    model: { position: [0, -2.3, 0], rotation: [0.52, 6.0, 0], scale: 0.72, spread: 0 },
+    camera: { position: [0, 0.7, 3.4], target: [0, -0.9, 0], fov: 32 },
+    model: { position: [0, -2.05, 0], rotation: [0.14, 6.0, 0], scale: 1.15, spread: 0 },
     lighting: { ambient: 0.51, keyIntensity: 1.89, keyPosition: [1.8, 4.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.5 },
     veil: 0.12,
     mobile: {
-      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
-      model: { position: [0, 0.62, 0], scale: 0.5 },
+      camera: { position: [0, 2.05, 3.5], target: [0, -0.38, 0], fov: 36 },
+      model: { position: [0, 0.1, 0], scale: 0.42 },
     },
   },
 ];
