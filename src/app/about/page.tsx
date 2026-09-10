@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { BUSINESS, DISHES, STORY } from "@/data/siteContent";
 import { Button } from "@/components/ui/Button";
 
@@ -58,23 +57,23 @@ export default function AboutPage() {
       <h2 className="mt-24 text-[length:var(--text-section)] leading-[1.02]">
         From the kitchen
       </h2>
-      <ul className="mt-10 grid grid-cols-2 gap-6 lg:grid-cols-4">
-        {DISHES.slice(0, 4).map((dish) => (
-          <li key={dish.slug}>
-            <div className="overflow-hidden border border-ink/12 bg-cream">
-              <Image
-                src={`/images/dishes/${dish.slug}.jpg`}
-                alt={`${dish.name} at ${BUSINESS.name}`}
-                width={dish.w}
-                height={dish.h}
-                sizes="(max-width: 1024px) 46vw, 23vw"
-                className="h-auto w-full object-cover"
-              />
-            </div>
-            <h3 className="mt-3 text-base font-bold tracking-tight">{dish.name}</h3>
+      <ul className="mt-10 border-t border-ink/15">
+        {DISHES.map((dish) => (
+          <li
+            key={dish.slug}
+            className="grid items-baseline gap-x-8 gap-y-1 border-b border-ink/15 py-6 sm:grid-cols-[16rem_1fr]"
+          >
+            <h3 className="font-[family-name:var(--font-display)] text-xl tracking-tight sm:text-2xl">
+              {dish.name}
+            </h3>
+            <p className="max-w-[52ch] text-sm leading-relaxed text-ink-soft">{dish.note}</p>
           </li>
         ))}
       </ul>
+      <p className="mt-5 max-w-[62ch] text-sm leading-relaxed text-ink-faint">
+        A sample of what the kitchen cooks, not a full menu. What is running
+        changes through the day.
+      </p>
     </div>
   );
 }

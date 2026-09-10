@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { BUSINESS, DISHES, REVIEWS, STORY } from "@/data/siteContent";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
@@ -17,36 +16,26 @@ export function FeaturesChapter() {
           </p>
         </div>
 
-        {/* Dish gallery. A multi-column cascade rather than a grid: columns
-            flow independently, so the staggered offsets can never collide the
-            way absolutely placed grid items do. */}
-        <ul className="mt-20 gap-x-8 sm:columns-2 lg:columns-3 lg:gap-x-10">
-          {DISHES.map((dish, i) => (
+        {/* The menu is set as type rather than photographs: the dish itself is
+            modelled in the canvas behind, so pictures here would only compete
+            with it. Rows, not cards, so the list reads like a printed menu. */}
+        <ul className="mt-16 border-t border-ink/15">
+          {DISHES.map((dish) => (
             <li
               key={dish.slug}
-              className="mb-14 break-inside-avoid"
-              style={{ marginTop: i % 3 === 1 ? "3.5rem" : undefined }}
+              className="grid items-baseline gap-x-8 gap-y-1 border-b border-ink/15 py-6 sm:grid-cols-[16rem_1fr]"
             >
-              <figure>
-                <div className="relative overflow-hidden border border-ink/12 bg-cream">
-                  <Image
-                    src={`/images/dishes/${dish.slug}.jpg`}
-                    alt={`${dish.name} at ${BUSINESS.name}`}
-                    width={dish.w}
-                    height={dish.h}
-                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 31vw"
-                    priority={i < 2}
-                    className="h-auto w-full object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 border-t border-ink/12 pt-4">
-                  <h3 className="text-xl font-bold tracking-tight">{dish.name}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{dish.note}</p>
-                </figcaption>
-              </figure>
+              <h3 className="font-[family-name:var(--font-display)] text-xl tracking-tight sm:text-2xl">
+                {dish.name}
+              </h3>
+              <p className="max-w-[52ch] text-sm leading-relaxed text-ink-soft">{dish.note}</p>
             </li>
           ))}
         </ul>
+        <p className="mt-5 max-w-[62ch] text-sm leading-relaxed text-ink-faint">
+          A sample of what the kitchen cooks, not a full menu, and what is running
+          changes through the day. Call ahead if you are after something in particular.
+        </p>
 
         {/* Reviews, quoted verbatim from Google. */}
         <div className="mt-28 border-t border-ink/15 pt-14">

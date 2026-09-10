@@ -55,12 +55,10 @@ export interface Chapter {
   camera: CameraState;
   model: ModelState;
   lighting: LightingState;
-  /** Dish photograph mapped onto the hero plate during this chapter. */
-  dish: string;
   /**
    * How far the canvas recedes behind the content, 0 to 1. Dense editorial
-   * sections push this up so photography and type stay readable instead of
-   * competing with a 3D object behind them.
+   * sections push this up so the type stays readable instead of competing
+   * with a 3D object behind it.
    */
   veil: number;
   /** Narrow-viewport overrides. Merged over the desktop state. */
@@ -80,12 +78,11 @@ export const CHAPTERS: Chapter[] = [
     range: [0, 0.091],
     camera: { position: [0, 1.0, 5.6], target: [0.3, -0.2, 0], fov: 34 },
     model: { position: [1.78, -0.42, 0], rotation: [0.62, -0.35, 0], scale: 0.66, spread: 0 },
-    lighting: { ambient: 0.65, keyIntensity: 2.6, keyPosition: [2.8, 4.0, 2.4], rimIntensity: 0.4, keyWarmth: 0.5 },
-    dish: "lok-lak",
+    lighting: { ambient: 0.51, keyIntensity: 1.82, keyPosition: [2.8, 4.0, 2.4], rimIntensity: 0.4, keyWarmth: 0.5 },
     veil: 0,
     mobile: {
-      camera: { position: [0, 1.7, 5.4], target: [0, -0.75, 0], fov: 42 },
-      model: { position: [0, 0.7, 0], scale: 0.75 },
+      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
+      model: { position: [0, 0.62, 0], scale: 0.5 },
     },
   },
   {
@@ -95,12 +92,11 @@ export const CHAPTERS: Chapter[] = [
     range: [0.091, 0.182],
     camera: { position: [2.1, 1.3, 5.2], target: [0.35, -0.15, 0], fov: 34 },
     model: { position: [1.7, -0.32, 0], rotation: [0.4, 0.6, 0.04], scale: 0.62, spread: 0 },
-    lighting: { ambient: 0.75, keyIntensity: 2.4, keyPosition: [3.6, 3.5, 1.6], rimIntensity: 0.45, keyWarmth: 0.38 },
-    dish: "lok-lak",
+    lighting: { ambient: 0.58, keyIntensity: 1.68, keyPosition: [3.6, 3.5, 1.6], rimIntensity: 0.45, keyWarmth: 0.38 },
     veil: 0.05,
     mobile: {
-      camera: { position: [0, 1.7, 5.4], target: [0, -0.75, 0], fov: 42 },
-      model: { position: [0, 0.65, 0], scale: 0.7 },
+      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
+      model: { position: [0, 0.58, 0], scale: 0.48 },
     },
   },
   {
@@ -110,12 +106,11 @@ export const CHAPTERS: Chapter[] = [
     range: [0.182, 0.455],
     camera: { position: [-0.2, 0.85, 4.6], target: [0.35, -0.25, 0], fov: 30 },
     model: { position: [1.72, -0.45, 0], rotation: [0.28, 1.6, -0.04], scale: 0.7, spread: 0 },
-    lighting: { ambient: 0.6,  keyIntensity: 3.0, keyPosition: [-1.6, 3.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.55 },
-    dish: "beef-greens",
+    lighting: { ambient: 0.47,  keyIntensity: 2.1, keyPosition: [-1.6, 3.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.55 },
     veil: 0.28,
     mobile: {
-      camera: { position: [0, 1.7, 5.4], target: [0, -0.75, 0], fov: 42 },
-      model: { position: [0, 0.7, 0], scale: 0.78 },
+      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
+      model: { position: [0, 0.62, 0], scale: 0.52 },
     },
   },
   {
@@ -125,8 +120,7 @@ export const CHAPTERS: Chapter[] = [
     range: [0.455, 0.545],
     camera: { position: [0, 4.3, 4.6], target: [0, -0.3, 0], fov: 40 },
     model: { position: [0, -0.28, 0], rotation: [0, 2.6, 0], scale: 0.96, spread: 1 },
-    lighting: { ambient: 0.8,  keyIntensity: 2.5, keyPosition: [0.8, 5.4, 1.8], rimIntensity: 0.4, keyWarmth: 0.32 },
-    dish: "hotpot",
+    lighting: { ambient: 0.62,  keyIntensity: 1.75, keyPosition: [0.8, 5.4, 1.8], rimIntensity: 0.4, keyWarmth: 0.32 },
     veil: 0,
     mobile: {
       camera: { position: [0, 5.4, 4.4], target: [0, -0.2, 0], fov: 54 },
@@ -137,14 +131,13 @@ export const CHAPTERS: Chapter[] = [
     id: "value",
     domId: "menu",
     label: "05 / The room",
-    // The menu gallery owns this stretch, so the object withdraws to the
-    // edge of frame and the canvas dims rather than fighting the photography.
+    // The menu list owns this stretch, so the object withdraws to the edge
+    // of frame and the canvas dims rather than fighting the type.
     range: [0.545, 0.909],
     camera: { position: [3.2, 2.0, 4.6], target: [2.2, -0.2, 0], fov: 36 },
     model: { position: [2.9, -0.35, -0.5], rotation: [0.15, 3.6, 0], scale: 0.62, spread: 0.7 },
-    lighting: { ambient: 0.7,  keyIntensity: 2.1, keyPosition: [3.0, 4.0, 2.6], rimIntensity: 0.35, keyWarmth: 0.38 },
-    dish: "beef-noodle",
-    veil: 0.93,
+    lighting: { ambient: 0.55,  keyIntensity: 1.47, keyPosition: [3.0, 4.0, 2.6], rimIntensity: 0.35, keyWarmth: 0.38 },
+    veil: 0.96,
     mobile: {
       camera: { position: [0, 3.6, 6.0], target: [0, -0.2, 0], fov: 52 },
       model: { position: [0, -0.2, 0], scale: 0.5 },
@@ -157,12 +150,11 @@ export const CHAPTERS: Chapter[] = [
     range: [0.909, 1],
     camera: { position: [0, 0.7, 5.2], target: [0, -1.0, 0], fov: 32 },
     model: { position: [0, -2.3, 0], rotation: [0.52, 6.0, 0], scale: 0.72, spread: 0 },
-    lighting: { ambient: 0.65, keyIntensity: 2.7, keyPosition: [1.8, 4.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.5 },
-    dish: "lok-lak",
+    lighting: { ambient: 0.51, keyIntensity: 1.89, keyPosition: [1.8, 4.2, 2.8], rimIntensity: 0.4, keyWarmth: 0.5 },
     veil: 0.12,
     mobile: {
-      camera: { position: [0, 1.7, 5.4], target: [0, -0.75, 0], fov: 42 },
-      model: { position: [0, 0.7, 0], scale: 0.72 },
+      camera: { position: [0, 1.5, 6.0], target: [0, -0.5, 0], fov: 40 },
+      model: { position: [0, 0.62, 0], scale: 0.5 },
     },
   },
 ];

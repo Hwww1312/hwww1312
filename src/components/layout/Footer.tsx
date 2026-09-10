@@ -60,8 +60,8 @@ export function Footer() {
         </div>
 
         <p className="mt-12 border-t border-ink/10 pt-8 text-xs text-ink-faint">
-          Listing details, photographs and reviews from the restaurant&rsquo;s Google
-          Business profile.
+          Listing details and reviews from the restaurant&rsquo;s Google Business
+          profile. All imagery on this site is generated, not photographic.
         </p>
       </div>
     </footer>

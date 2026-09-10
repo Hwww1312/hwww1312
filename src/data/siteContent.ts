@@ -83,19 +83,19 @@ export const REVIEWS = [
 ] as const;
 
 /**
- * VERIFIED - dishes the restaurant photographed for its own listing.
- * Descriptions report only what is visible in those photographs.
+ * VERIFIED - dishes named on the restaurant's own Google listing.
+ * Descriptions report only what the listing itself shows.
  * No prices: none are published.
  */
 export const DISHES = [
-  { slug: "lok-lak", name: "Lok Lak Pepper Beef", note: "Seared beef with pepper and onion, piled onto fresh lettuce.", w: 426, h: 520 },
-  { slug: "beef-noodle", name: "Beef Noodle Soup", note: "Sliced beef and beef balls in a dark, long simmered broth.", w: 602, h: 455 },
-  { slug: "skewers", name: "Lemongrass Chicken Skewers", note: "Charred skewers with cucumber and a bowl of dipping broth.", w: 466, h: 540 },
-  { slug: "hotpot", name: "Steamboat", note: "A pot over the burner with egg noodles, greens and fish balls to cook at the table.", w: 740, h: 680 },
-  { slug: "fish-soup", name: "Fish Soup", note: "Fish in a golden broth under coriander and a crisp fried topping.", w: 602, h: 370 },
-  { slug: "seafood-crisp", name: "Seafood and Greens", note: "Prawns, squid and greens over crisp fried egg noodles.", w: 431, h: 475 },
-  { slug: "beef-greens", name: "Beef with Greens", note: "Beef tossed through snake beans, herbs and red onion.", w: 1158, h: 702 },
-  { slug: "noodle-balls", name: "Noodles and Fish Balls", note: "Herbs, fried garlic and fish balls in a bowl of broth.", w: 431, h: 405 },
+  { slug: "lok-lak", name: "Lok Lak Pepper Beef", note: "Seared beef with pepper and onion, piled onto fresh lettuce." },
+  { slug: "skewers", name: "Beef and Pork Skewers", note: "Marinated in lemongrass and charred over the coals." },
+  { slug: "beef-noodle", name: "Beef Noodle Soup", note: "Sliced beef and beef balls in a dark, long simmered broth." },
+  { slug: "hotpot", name: "Steamboat", note: "A pot over the burner with egg noodles, greens and fish balls to cook at the table." },
+  { slug: "fish-soup", name: "Fish Soup", note: "Fish in a golden broth under coriander and a crisp fried topping." },
+  { slug: "seafood-crisp", name: "Seafood and Greens", note: "Prawns, squid and greens over crisp fried egg noodles." },
+  { slug: "beef-greens", name: "Beef with Greens", note: "Beef tossed through snake beans, herbs and red onion." },
+  { slug: "noodle-balls", name: "Noodles and Fish Balls", note: "Herbs, fried garlic and fish balls in a bowl of broth." },
 ] as const;
 
 export type Dish = (typeof DISHES)[number];
