@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { buildDish, dishMaterials } from "@/lib/three/curry";
@@ -25,7 +25,18 @@ const POINTER_PITCH = 0.09; // ~5 degrees
 /** Idle float, in world units. About ten pixels at the hero framing. */
 const FLOAT_Y = 0.03;
 
-export function CurryBowl({ lowPower }: { lowPower: boolean }) {
+export function CurryBowl({
+  lowPower,
+  children,
+}: {
+  lowPower: boolean;
+  /**
+   * Rendered inside the bowl's own rotated, scaled frame. The ingredient
+   * call-outs go here: their anchors are points on the dish, so they have to
+   * travel with it rather than sit at fixed positions in the scene.
+   */
+  children?: ReactNode;
+}) {
   const anchor = useRef<THREE.Group>(null);
   const spin = useRef<THREE.Group>(null);
   const clusterRefs = useRef<(THREE.Group | null)[]>([]);
@@ -114,6 +125,8 @@ export function CurryBowl({ lowPower }: { lowPower: boolean }) {
             />
           </group>
         ))}
+
+        {children}
       </group>
     </group>
   );

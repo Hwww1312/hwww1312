@@ -62,9 +62,12 @@ export function StoryScene({
       <Suspense fallback={null}>
         <StoryEnvironment />
         <Backdrop />
-        <CurryBowl lowPower={lowPower} />
+        {/* The call-outs live inside the bowl's frame, so their anchors ride
+            with the dish as it turns rather than floating beside it. */}
+        <CurryBowl lowPower={lowPower}>
+          <IngredientLabels />
+        </CurryBowl>
         <Steam lowPower={lowPower} />
-        <IngredientLabels />
         <Preload all />
       </Suspense>
       {canGrade && <PostFX />}

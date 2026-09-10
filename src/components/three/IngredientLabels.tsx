@@ -9,9 +9,11 @@ import { resolveStory, storyState, window01 } from "@/lib/story/state";
 /**
  * The ingredient call-outs for chapter 02.
  *
- * Each label is anchored to a point in the bowl's own model space and
- * projected to the screen every frame, so the leader stays attached to the
- * thing it names while the camera climbs and the dish turns. They are drawn
+ * Each label is anchored to a point in the bowl's own model space — the
+ * component renders inside the bowl's frame, so the anchors inherit its
+ * position, rotation and scale — and is projected to the screen every frame.
+ * The leader therefore stays attached to the thing it names while the camera
+ * climbs and the dish turns. They are drawn
  * in HTML rather than in the scene because a hairline and a line of type
  * belong to the page's typography, not to its lighting.
  *
