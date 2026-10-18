@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en-AU" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,7 +9,11 @@
   <meta property="og:title" content="Homiz | Melbourne Streetwear" />
   <meta property="og:description" content="Drop 001: Feel Blessed / Fear Less. Made in Melbourne for the next gen." />
   <meta property="og:image" content="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/704232f1-0d06-4a13-bc4c-49bf8136381b.webp" />
-  <link rel="icon" href="assets/logo.webp" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <!-- Set to your final domain before launch, e.g. https://homiz.com.au/ -->
+  <link rel="canonical" href="https://homiz.com.au/" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Homiz","slogan":"The next gen","url":"https://homiz.com.au/","logo":"https://homiz.com.au/assets/logo-black.png","address":{"@type":"PostalAddress","addressLocality":"Melbourne","addressRegion":"VIC","addressCountry":"AU"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -19,6 +23,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="config.js" defer></script>
+  <script src="shop.js" defer></script>
   <script src="main.js" defer></script>
 </head>
 <body>
@@ -254,6 +260,7 @@
             <input id="clubEmail" type="email" placeholder="Your email" autocomplete="email" required />
             <button type="submit" class="label">Sign up →</button>
           </form>
+          <label class="club__consent"><input type="checkbox" id="clubConsent" /> <span>I agree to receive emails from Homiz. Unsubscribe any time. See our <a href="help.html#privacy">privacy policy</a>.</span></label>
           <p class="club__msg label" id="clubMsg" role="status"></p>
         </div>
       </div>
@@ -263,9 +270,9 @@
   <footer class="footer shell">
     <div class="footer__cols">
       <div><h4 class="label">Shop</h4><ul><li><a href="#shop">New arrivals</a></li><li><a href="#shop">Hoodies</a></li><li><a href="#shop">Trackpants</a></li><li><a href="#lookbook">Lookbook</a></li></ul></div>
-      <div><h4 class="label">Help</h4><ul><li><a href="#club">Shipping</a></li><li><a href="#club">Returns</a></li><li><a href="#club">Size guide</a></li><li><a href="#club">Contact</a></li></ul></div>
+      <div><h4 class="label">Help</h4><ul><li><a href="help.html#shipping">Shipping</a></li><li><a href="help.html#returns">Returns &amp; exchanges</a></li><li><a href="help.html#sizing">Size guide</a></li><li><a href="help.html#contact">Contact</a></li><li><a href="help.html#privacy">Privacy</a></li><li><a href="help.html#terms">Terms</a></li></ul></div>
       <div><h4 class="label">Homiz</h4><ul><li><a href="#story">Our story</a></li><li><a href="#manifesto">Manifesto</a></li><li><a href="#club">Homiz Club</a></li></ul></div>
-      <div><h4 class="label">Follow</h4><ul><li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a></li></ul></div>
+      <div><h4 class="label">Follow</h4><ul><li><a data-contact="instagram" href="#" target="_blank" rel="noopener">Instagram</a></li><li><a data-contact="tiktok" href="#" target="_blank" rel="noopener">TikTok</a></li><li><a data-contact="email" href="#">Email us</a></li></ul></div>
     </div>
     <div class="footer__mark"><img src="assets/logo-black.png" alt="homiz — the next gen" loading="lazy" /></div>
     <div class="footer__base label"><span>© 2026 Homiz</span><span>Made in Melbourne</span></div>
@@ -279,14 +286,28 @@
     <div class="drawer__body">
       <p class="label" id="qvBadge"></p>
       <h3 id="qvName"></h3>
+      <p class="qv-price" id="qvPrice">Price at drop</p>
       <p id="qvDesc"></p>
-      <div><p class="label" style="margin-bottom:10px">Size</p>
+      <div><p class="label" style="margin-bottom:10px">Size — <a href="help.html#sizing" class="u">size guide</a></p>
         <div class="sizes" id="qvSizes">
           <button class="size" aria-pressed="false">XS</button><button class="size" aria-pressed="false">S</button><button class="size" aria-pressed="false">M</button><button class="size" aria-pressed="false">L</button><button class="size" aria-pressed="false">XL</button>
         </div>
       </div>
       <button class="btn btn--ink" id="qvNotify">Notify me at drop</button>
       <p class="drawer__note" id="qvNote" role="status"></p>
+    </div>
+  </aside>
+
+  <!-- Bag -->
+  <aside class="drawer bag" id="bag" aria-hidden="true" aria-labelledby="bagTitle" role="dialog" aria-modal="true">
+    <div class="drawer__head"><span class="label" id="bagTitle">Your bag (<span id="bagTitleCount">0</span>)</span><button class="drawer__close" id="bagClose" aria-label="Close bag">✕</button></div>
+    <div class="bag__empty" id="bagEmpty"><p>Your bag is empty.</p><button class="btn btn--ink" id="bagShop">Shop new arrivals</button></div>
+    <ul class="bag__lines" id="bagLines"></ul>
+    <div class="bag__foot" id="bagFoot" hidden>
+      <div class="bag__row"><span class="label">Subtotal</span><span id="bagSubtotal"></span></div>
+      <p class="bag__note">GST included. Shipping is calculated at checkout.</p>
+      <a class="btn btn--ink bag__checkout" id="bagCheckout" href="#">Checkout</a>
+      <p class="drawer__note" id="bagError" role="status"></p>
     </div>
   </aside>
 

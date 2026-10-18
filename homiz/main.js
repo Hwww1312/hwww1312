@@ -156,13 +156,77 @@
   }));
   syncWish();
   $("#wishBtn").addEventListener("click", () => goTo("#shop"));
-  $("#bagBtn").addEventListener("click", () => goTo("#shop"));
 
   /* ---------------- drawers ---------------- */
   const scrim = $("#scrim");
   const drawer = $("#drawer");
   const menu = $("#menu");
+  const bag = $("#bag");
+  const shop = window.HomizShop || { enabled: false, onChange() {}, product() {} };
   let currentProduct = null;
+
+  function openBag() {
+    bag.classList.add("is-on");
+    bag.setAttribute("aria-hidden", "false");
+    lock(true);
+    $("#bagClose").focus({ preventScroll: true });
+  }
+  $("#bagBtn").addEventListener("click", openBag);
+  $("#bagClose").addEventListener("click", () => closeAll());
+  $("#bagShop").addEventListener("click", () => { closeAll(); goTo("#shop"); });
+
+  const thumb = (url) => { try { const u = new URL(url); u.searchParams.set("width", "200"); return u.href; } catch { return url; } };
+  // Re-render prices, bag count and bag lines whenever the Shopify state changes.
+  shop.onChange((s) => {
+    $$(".card").forEach((card) => {
+      const p = shop.product(card.dataset.product);
+      if (!p) return;
+      const sizes = new Set(p.variants.map((v) => v.price.amount));
+      $(".card__price", card).textContent = p.available ? `${sizes.size > 1 ? "From " : ""}${shop.money(p.price)}` : "Sold out";
+    });
+    const cart = s.cart;
+    $("#bagCount").textContent = cart?.totalQuantity || 0;
+    $("#bagTitleCount").textContent = cart?.totalQuantity || 0;
+    const lines = cart?.lines.nodes || [];
+    $("#bagEmpty").hidden = lines.length > 0;
+    $("#bagEmpty p").textContent = shop.enabled ? "Your bag is empty." : "The shop opens at the drop. Join the Homiz Club for first access.";
+    $("#bagFoot").hidden = lines.length === 0;
+    $("#bagLines").innerHTML = lines.map((l) => {
+      const m = l.merchandise;
+      return `<li class="bag-line" data-line="${l.id}">
+        ${m.image ? `<img src="${thumb(m.image.url)}" alt="${m.image.altText || m.product.title}" />` : `<span class="bag-line__ph"></span>`}
+        <div><p class="bag-line__name">${m.product.title}</p><p class="bag-line__meta">${m.title}</p>
+          <div class="qty" role="group" aria-label="Quantity">
+            <button data-q="${l.quantity - 1}" aria-label="One fewer">−</button><span>${l.quantity}</span><button data-q="${l.quantity + 1}" aria-label="One more">+</button>
+          </div></div>
+        <p class="bag-line__price">${shop.money({ amount: Number(m.price.amount) * l.quantity, currencyCode: m.price.currencyCode })}</p>
+      </li>`;
+    }).join("");
+    if (cart) {
+      $("#bagSubtotal").textContent = shop.money(cart.cost.subtotalAmount);
+      $("#bagCheckout").href = cart.checkoutUrl;
+    }
+    $("#bagError").textContent = s.error;
+    bag.classList.toggle("is-busy", s.busy);
+    if (currentProduct) renderSizes(currentProduct);
+  });
+  $("#bagLines").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-q]");
+    if (b && !shop.state.busy) shop.setQuantity(b.closest("[data-line]").dataset.line, Number(b.dataset.q));
+  });
+
+  // Quick-view sizes come from Shopify variants when the shop is connected.
+  function renderSizes(id) {
+    const p = shop.product(id);
+    const wrap = $("#qvSizes");
+    const picked = $('#qvSizes .size[aria-pressed="true"]')?.textContent;
+    const sizes = p ? p.variants : ["XS", "S", "M", "L", "XL"].map((size) => ({ size, available: true }));
+    wrap.innerHTML = sizes.map((v) => `<button class="size" aria-pressed="${v.size === picked}" ${v.available ? "" : "disabled"} data-variant="${v.id || ""}">${v.size}</button>`).join("");
+    const live = shop.enabled && p;
+    $("#qvNotify").textContent = live ? (p.available ? "Add to bag" : "Sold out") : "Notify me at drop";
+    $("#qvNotify").disabled = Boolean(live && !p.available) || shop.state.busy;
+    $("#qvPrice").textContent = live ? shop.money(p.price) : "Price at drop";
+  }
   function lock(on) {
     document.body.classList.toggle("is-locked", on);
     scrim.classList.toggle("is-on", on);
@@ -178,14 +242,16 @@
     $("#qvBadge").textContent = p.badge;
     $("#qvDesc").textContent = p.desc;
     $("#qvNote").textContent = "";
-    $$("#qvSizes .size").forEach((s) => s.setAttribute("aria-pressed", "false"));
+    $("#qvSizes").innerHTML = "";
+    renderSizes(id);
     drawer.classList.add("is-on");
     drawer.setAttribute("aria-hidden", "false");
     lock(true);
     $("#drawerClose").focus({ preventScroll: true });
   }
   function closeAll() {
-    [drawer, menu].forEach((d) => { d.classList.remove("is-on"); d.setAttribute("aria-hidden", "true"); });
+    [drawer, menu, bag].forEach((d) => { d.classList.remove("is-on"); d.setAttribute("aria-hidden", "true"); });
+    currentProduct = null;
     closeLightbox();
     lock(false);
   }
@@ -193,13 +259,22 @@
     e.preventDefault();
     openQuick(el.closest(".card").dataset.product);
   }));
-  $$("#qvSizes .size").forEach((s) => s.addEventListener("click", () => {
+  $("#qvSizes").addEventListener("click", (e) => {
+    const s = e.target.closest(".size");
+    if (!s || s.disabled) return;
     $$("#qvSizes .size").forEach((o) => o.setAttribute("aria-pressed", String(o === s)));
     $("#qvNote").textContent = "";
-  }));
-  $("#qvNotify").addEventListener("click", () => {
+  });
+  $("#qvNotify").addEventListener("click", async () => {
     const size = $('#qvSizes .size[aria-pressed="true"]');
     if (!size) { $("#qvNote").textContent = "Pick a size first."; return; }
+    if (shop.enabled && size.dataset.variant) {
+      await shop.add(size.dataset.variant);
+      if (shop.state.error) { $("#qvNote").textContent = shop.state.error; return; }
+      closeAll();
+      openBag();
+      return;
+    }
     const list = store.get("homiz-notify", []);
     list.push(`${currentProduct}:${size.textContent}`);
     store.set("homiz-notify", list);
@@ -323,13 +398,43 @@
   }
 
   /* ---------------- club form ---------------- */
-  $("#clubForm").addEventListener("submit", (e) => {
+  const config = window.HOMIZ_CONFIG || {};
+  const klaviyo = config.klaviyo || {};
+  $("#clubForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const input = $("#clubEmail");
     const msg = $("#clubMsg");
     if (!input.value || !input.checkValidity()) { msg.textContent = "Check that email address and try again."; input.focus(); return; }
-    msg.textContent = "You're in. Watch your inbox for Drop 001.";
-    input.value = "";
+    if (!$("#clubConsent").checked) { msg.textContent = "Tick the box to agree to emails from Homiz."; return; }
+    if (!klaviyo.companyId || !klaviyo.listId) {
+      msg.textContent = "Sign-ups open soon. Follow us on Instagram for the drop date.";
+      return;
+    }
+    msg.textContent = "Signing you up…";
+    try {
+      const res = await fetch(`https://a.klaviyo.com/client/subscriptions/?company_id=${encodeURIComponent(klaviyo.companyId)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
+        body: JSON.stringify({ data: { type: "subscription", attributes: {
+          custom_source: "Homiz website",
+          profile: { data: { type: "profile", attributes: { email: input.value, subscriptions: { email: { marketing: { consent: "SUBSCRIBED" } } } } } },
+        }, relationships: { list: { data: { type: "list", id: klaviyo.listId } } } } }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      msg.textContent = "You're in. Watch your inbox for Drop 001.";
+      input.value = "";
+    } catch {
+      msg.textContent = "That didn't go through. Try again in a moment.";
+    }
+  });
+
+  // Contact details and socials come from config.js; unset ones are hidden.
+  const contact = config.contact || {};
+  $$("[data-contact]").forEach((el) => {
+    const key = el.dataset.contact;
+    const value = contact[key];
+    if (!value) { (el.closest("li") || el).hidden = true; return; }
+    if (key === "email") { el.textContent = value; el.href = `mailto:${value}`; } else el.href = value;
   });
 
   /* ---------------- boot ---------------- */

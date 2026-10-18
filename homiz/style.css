@@ -338,3 +338,27 @@ img { display: block; max-width: 100%; }
   .js .reveal-img { clip-path: none; }
   .js .reveal-img img { scale: 1; }
 }
+
+/* ---------- bag ---------- */
+.bag__empty { padding: 40px 24px; display: grid; gap: 18px; justify-items: start; color: var(--muted); }
+.bag__lines { list-style: none; padding: 8px 24px; display: grid; }
+.bag-line { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.bag-line img, .bag-line__ph { width: 84px; aspect-ratio: 4 / 5; object-fit: cover; background: var(--panel); }
+.bag-line__name { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.bag-line__meta { font-size: 13px; color: var(--muted); margin: 2px 0 10px; }
+.bag-line__price { font-size: 13px; font-variant-numeric: tabular-nums; }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--line); }
+.qty button { width: 32px; height: 32px; }
+.qty span { min-width: 24px; text-align: center; font-size: 13px; font-variant-numeric: tabular-nums; }
+.bag__foot { margin-top: auto; padding: 20px 24px 28px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+.bag__row { display: flex; justify-content: space-between; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bag__note { font-size: 13px; color: var(--muted); }
+.bag__checkout { justify-content: center; }
+.bag.is-busy .bag__lines, .bag.is-busy .bag__foot { opacity: 0.5; pointer-events: none; }
+.qv-price { font-size: 16px; font-weight: 600; color: var(--ink) !important; font-variant-numeric: tabular-nums; }
+.size:disabled { opacity: 0.35; text-decoration: line-through; cursor: not-allowed; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+a.u { text-decoration: underline; text-underline-offset: 2px; }
+.club__consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: 13px; opacity: 0.85; }
+.club__consent input { margin-top: 3px; accent-color: var(--wine-ink); }
+.club__consent a { text-decoration: underline; }
