@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Pre-launch check for the Homiz site. Run from the repo root:
-//   node homiz/tools/prelaunch-check.mjs
+//   node docs/tools/prelaunch-check.mjs
 // It reads config.js, tests the Shopify connection and products, and lists
 // every fill-in still left in the pages. Exit code 1 means "not ready yet".
 import { readFileSync } from "node:fs";

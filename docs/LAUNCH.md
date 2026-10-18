@@ -1,7 +1,7 @@
 # Homiz launch checklist
 
 Work top to bottom. When everything is done, run
-`node homiz/tools/prelaunch-check.mjs`. It tests your Shopify connection and lists
+`node docs/tools/prelaunch-check.mjs`. It tests your Shopify connection and lists
 anything still unfilled.
 
 Fees and thresholds below are as of 2026. Check the linked government sites for
@@ -65,7 +65,7 @@ current figures before you pay anything.
 
 ## 4. Connect the site
 
-- [ ] **Fill in `homiz/config.js`:** the Shopify domain (`yourstore.myshopify.com`),
+- [ ] **Fill in `docs/config.js`:** the Shopify domain (`yourstore.myshopify.com`),
       the Storefront token, contact email, Instagram and TikTok.
 - [ ] **Klaviyo** (free up to 250 contacts): create an account, connect it to
       Shopify, create a list called "Homiz Club", then paste the public API key
@@ -75,24 +75,32 @@ current figures before you pay anything.
       Klaviyo handles this).
 - [ ] **Fill in every highlighted (yellow) item in `help.html`,** including your ABN
       and launch date.
-- [ ] **Run `node homiz/tools/prelaunch-check.mjs`** until it reports "All required
+- [ ] **Run `node docs/tools/prelaunch-check.mjs`** until it reports "All required
       items are done".
 
-## 5. Host it
+## 5. Host it on your own domain
 
-The site is plain files with no build step, so any static host works.
+The site lives in the `docs/` folder and is served free by GitHub Pages.
 
-- **Recommended:** Cloudflare Pages or Netlify (both free). Upload the `homiz/`
-  folder, then connect `homiz.com.au`. Both include HTTPS.
-- **Higgsfield:** the site is already deployed at homiz-nextgen.higgsfield.app,
-  but it's private. Making it public there also lists it on their community feed.
-
-Then:
-
-- [ ] Update the `canonical` links in `index.html` and `help.html` if your domain
-      isn't `homiz.com.au`.
-- [ ] Move the campaign images into `assets/` and point the page at them, so the
-      site doesn't depend on Higgsfield's CDN.
+- [ ] **Turn on GitHub Pages (one time).** Sign in to GitHub as Hwww1312 and open
+      github.com/hwww1312/hwww1312/settings/pages. Set **Source** to *Deploy from a
+      branch*, the **branch** to `claude/affectionate-goodall-mk0oz7` and the
+      **folder** to `/docs`, then save. The site appears at
+      hwww1312.github.io/hwww1312/.
+- [ ] **Buy `homiz.com.au`** (and `homiz.au`) from an Australian registrar such as
+      VentraIP or Crazy Domains. You'll need your ABN. (`homiz.com` is taken by a
+      French renovation company.)
+- [ ] **Point the domain at GitHub.** In the registrar's DNS settings, add:
+  - four **A** records for `@`: `185.199.108.153`, `185.199.109.153`,
+    `185.199.110.153`, `185.199.111.153`
+  - one **CNAME** record for `www` pointing to `hwww1312.github.io`
+- [ ] **Tell GitHub about the domain.** On the same Pages settings page, enter
+      `homiz.com.au` under **Custom domain**, save, wait for the DNS check to
+      pass (minutes to a few hours), then tick **Enforce HTTPS**.
+- [ ] **Redirect `homiz.au` to `homiz.com.au`** using the registrar's domain
+      forwarding.
+- [ ] Move the campaign images into `docs/assets/` and point the page at them,
+      so the site doesn't depend on Higgsfield's CDN.
 
 ## 6. Test before you announce
 

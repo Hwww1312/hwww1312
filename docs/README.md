@@ -4,7 +4,7 @@ The storefront and brand story for Homiz, a Melbourne streetwear label. It's a
 static site with no build step: open `index.html` through any static server.
 
 ```bash
-cd homiz && python3 -m http.server 8000   # http://localhost:8000
+cd docs && python3 -m http.server 8000   # http://localhost:8000
 ```
 
 GSAP ScrollTrigger and Lenis load from CDNs (pinned versions, see `index.html`).
