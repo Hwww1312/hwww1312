@@ -98,6 +98,7 @@ img { display: block; max-width: 100%; }
 .hero__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s var(--ease); }
 .hero__slide.is-on { opacity: 1; z-index: 1; }
 .hero__media { position: absolute; inset: -8% 0; will-change: transform; }
+.hero__media picture { display: block; width: 100%; height: 100%; }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 8s cubic-bezier(.2, .6, .3, 1); }
 .hero__slide.is-on .hero__media img { transform: scale(1); }
 .hero__slide--front img { object-position: 70% 12%; }
@@ -126,7 +127,7 @@ img { display: block; max-width: 100%; }
 .hero__dot.is-on i::after { animation: dotfill 7s linear forwards; }
 @keyframes dotfill { to { transform: scaleX(1); } }
 @media (max-width: 720px) {
-  .hero__slide--front img { object-position: 76% 12%; }
+  .hero__slide--front img, .hero__slide--back img { object-position: 50% 30%; }
   .hero__dots { display: none; }
 }
 

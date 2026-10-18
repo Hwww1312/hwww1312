@@ -1,42 +1,46 @@
 # Homiz — The Next Gen
 
-A scroll-driven 3D story site for Homiz, a Melbourne streetwear label. It's a
+The storefront and brand story for Homiz, a Melbourne streetwear label. It's a
 static site with no build step: open `index.html` through any static server.
 
 ```bash
 cd homiz && python3 -m http.server 8000   # http://localhost:8000
 ```
 
-Three.js, GSAP ScrollTrigger and Lenis load from CDNs (pinned versions, see
-`index.html`).
+GSAP ScrollTrigger and Lenis load from CDNs (pinned versions, see `index.html`).
 
-## The story
+## Page order
 
-One fixed WebGL canvas sits between each chapter's scenery (under it) and its
-copy (above it). Sticky elements are stacking contexts, so each chapter has two
-sticky stages: `.stage-bg` and `.stage-fg`.
-
-| # | Chapter | What happens |
-|---|---------|--------------|
-| 00 | Home | The roofed "o" from the logo is extruded into glossy 3D. A light follows the cursor and lights up the outlined HOMIZ word. Click the house: shockwave, flash, spin, then the camera flies through the window. Scrolling does the same fly-through. |
-| 01 | Origin | Melbourne laneway backdrop with parallax, and the headline reveals line by line. |
-| 02 | Drop 001 | The four pieces on a 3D ring with a cloth-wave shader. Scroll or drag to turn it, click a piece to open its detail view. |
-| 03 | Two Faces | The zip hoodie on a turntable. Scroll flips it from Feel Blessed (front) to Fear Less (back), and the swatches swap colourways. |
-| 04 | Details | Puffy 3D stars drift past the spec list. |
-| 05 | Melbourne | Skyline parallax. The manifesto lights up word by word. |
-| 06 | Join | Email capture (front-end only for now), plus a marquee. |
+1. **Announcement bar** with rotating messages, then a sticky header (centred
+   logo) that hides as you scroll down and comes back when you scroll up.
+2. **Hero:** a campaign slideshow (front view, then back view) with a slow
+   zoom and parallax. Phones get portrait shots instead.
+3. **Intro line:** lights up word by word as you scroll.
+4. **New Arrivals:** four product cards. Hovering a card swaps front and back,
+   with a soft light that follows the cursor. Cards have a wishlist toggle
+   (remembered in the browser) and a quick view drawer with a size picker.
+5. **Our Story:** four chapters that pan sideways as you scroll down.
+6. **Two Faces:** the hoodie turns from Feel Blessed to Fear Less as you
+   scroll. You can drag it, tilt it with the cursor and switch colourways.
+7. **Lookbook:** editorial photos with parallax. Click one to open it full size.
+8. **Manifesto:** text that lights up word by word over the Melbourne skyline.
+9. **Homiz Club** sign-up, then the footer.
 
 ## Assets
 
-- `assets/cut-*.webp`: the product shots with the background cut out.
-- `assets/logo-white.png`: the logo turned white on transparent for the dark UI.
-- The laneway, skyline and fabric backdrops were generated with Higgsfield and
-  are hotlinked from Higgsfield's CDN in `index.html` / `style.css`. Download
-  them into `assets/` and swap the URLs before launch.
+- `assets/products/`: the hoodie product photos.
+- `assets/cut-*.webp`: the same hoodies cut out, used by the Two Faces section.
+- `assets/logo-black.png` / `logo-white.png`: the logo on a transparent background.
+- The campaign, lookbook, story and trackpant images were generated with
+  Higgsfield from the product photos and are hosted on Higgsfield's CDN
+  (`d2ol7oe51mr4n9.cloudfront.net`). The trackpant shots are renders of the set
+  in the lookbook photo. Swap in real photography when you have it.
 
 ## Before launch
 
-- Connect `#dropForm` (in `main.js`) to a real mailing list. It only shows a
-  thank-you message right now.
-- Add real prices and product links to `PRODUCTS` in `main.js`, and the real
-  Instagram URL in the footer.
+- Add real prices: the cards currently say "Price at drop".
+- Connect the Homiz Club form (`#clubForm`) and "Notify me" (`#qvNotify`) in
+  `main.js` to a real mailing list. Right now they only confirm on the page.
+- Wire up the bag and the help links (shipping, returns, size guide, contact),
+  or move the site onto Shopify and keep this as the theme direction.
+- Put in the real Instagram and TikTok links in the footer.
