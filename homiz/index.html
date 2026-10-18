@@ -1,226 +1,303 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Homiz — The Next Gen</title>
-  <meta name="description" content="Homiz is a Melbourne streetwear label. Drop 001: Fear Less / Feel Blessed acid-washed zip hoodies with puff-star sleeves." />
-  <meta name="theme-color" content="#0b0708" />
+  <title>Homiz | Melbourne Streetwear</title>
+  <meta name="description" content="Homiz is a Melbourne streetwear label for the next gen. Drop 001: Feel Blessed / Fear Less acid-wash zip hoodies and matching trackpants." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content="Homiz | Melbourne Streetwear" />
+  <meta property="og:description" content="Drop 001: Feel Blessed / Fear Less. Made in Melbourne for the next gen." />
+  <meta property="og:image" content="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/704232f1-0d06-4a13-bc4c-49bf8136381b.webp" />
   <link rel="icon" href="assets/logo.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/c1eb1cc3-4b25-4cd7-ae5d-6dde3a8c7907.webp" />
   <link rel="stylesheet" href="style.css" />
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-      }
-    }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="main.js" defer></script>
 </head>
 <body>
-  <!-- Preloader: the roof draws itself, then lifts -->
   <div class="loader" id="loader" aria-hidden="true">
-    <svg class="loader__roof" viewBox="0 0 120 80">
-      <path d="M8 62 L60 14 L112 62" />
-    </svg>
-    <div class="loader__count"><span id="loadCount">000</span></div>
-    <div class="loader__label">homiz / melbourne / est. the next gen</div>
+    <img src="assets/logo-black.png" alt="" />
+    <div class="loader__bar"><i id="loaderBar"></i></div>
   </div>
 
-  <canvas id="webgl" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
-  <div class="flash" id="flash" aria-hidden="true"></div>
-
-  <div class="cursor" aria-hidden="true">
-    <div class="cursor__dot"></div>
-    <div class="cursor__ring"><span class="cursor__label" id="cursorLabel"></span></div>
+  <div class="announce" role="region" aria-label="Announcements">
+    <button id="annPrev" aria-label="Previous message"><svg viewBox="0 0 12 12"><path d="M8 2 4 6l4 4" /></svg></button>
+    <div class="announce__msgs label" id="annMsgs">
+      <p class="is-on">Drop 001 — Feel Blessed / Fear Less — out now</p>
+      <p>Designed and made in Melbourne</p>
+      <p>Join the Homiz Club for first access to every drop</p>
+    </div>
+    <button id="annNext" aria-label="Next message"><svg viewBox="0 0 12 12"><path d="m4 2 4 4-4 4" /></svg></button>
   </div>
 
-  <header class="nav">
-    <a href="#hero" class="nav__logo" data-magnetic aria-label="Homiz home">
-      <img src="assets/logo-white.png" alt="homiz — the next gen" />
-    </a>
-    <nav class="nav__links" aria-label="Chapters">
-      <a href="#origin" data-magnetic>Origin</a>
-      <a href="#collection" data-magnetic>Drop 001</a>
-      <a href="#twoface" data-magnetic>Two Faces</a>
-      <a href="#melbourne" data-magnetic>Melbourne</a>
-    </nav>
-    <a href="#drop" class="nav__cta" data-magnetic>Join the list</a>
+  <header class="header" id="header">
+    <div class="header__inner shell">
+      <nav class="header__nav" aria-label="Main">
+        <a class="label" href="#shop">Shop</a>
+        <a class="label" href="#story">Our Story</a>
+        <a class="label" href="#lookbook">Lookbook</a>
+      </nav>
+      <button class="header__burger" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+      <a class="header__logo" href="#top" aria-label="Homiz home"><img src="assets/logo-black.png" alt="homiz — the next gen" /></a>
+      <div class="header__tools">
+        <a class="label hide-sm" href="#club">Club</a>
+        <button class="label hide-sm" id="wishBtn">Wishlist (<span class="count" id="wishCount">0</span>)</button>
+        <button class="label" id="bagBtn">Bag (<span class="count" id="bagCount">0</span>)</button>
+      </div>
+    </div>
   </header>
 
-  <!-- Chapter progress rail -->
-  <aside class="rail" aria-hidden="true">
-    <div class="rail__track"><div class="rail__fill" id="railFill"></div></div>
-    <div class="rail__label" id="railLabel">00 — Home</div>
-  </aside>
-
-  <main>
-    <!-- 00 HERO -->
-    <section class="chapter hero" id="hero" data-chapter="00 — Home">
-      <div class="sticky stage-bg">
-        <div class="hero__bg"></div>
-        <h1 class="hero__word" aria-label="homiz">
-          <span class="hero__word-outline">HOMIZ</span>
-          <span class="hero__word-lit" aria-hidden="true">HOMIZ</span>
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero" aria-label="Drop 001 campaign">
+      <div class="hero__slide hero__slide--front is-on">
+        <div class="hero__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/c1eb1cc3-4b25-4cd7-ae5d-6dde3a8c7907.webp" alt="Two models in a Melbourne graffiti laneway wearing the burgundy Feel Blessed zip hoodie and matching trackpants" fetchpriority="high" /></div>
+      </div>
+      <div class="hero__slide hero__slide--back">
+        <div class="hero__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/77121208-0231-435a-bff1-c190edfc4b15.webp" alt="Two models walking away down a laneway showing the Fear Less print on the back of burgundy and washed-black hoodies" /></div>
+      </div>
+      <div class="hero__shade"></div>
+      <div class="hero__copy">
+        <p class="label">Drop 001 — FW26</p>
+        <h1 class="hero__title" id="heroTitle">
+          <span class="line"><span>Feel Blessed.</span></span>
+          <span class="line"><span>Fear Less.</span></span>
         </h1>
+        <a class="btn" href="#shop">Shop the drop</a>
       </div>
-      <div class="sticky stage-fg">
-        <div class="hero__meta hero__meta--tl mono">[ 37.8136° S / 144.9631° E ]</div>
-        <div class="hero__meta hero__meta--tr mono">Drop 001 — FW26</div>
-        <div class="hero__bottom">
-          <p class="hero__tag serif"><em>the next gen</em> is already home.</p>
-          <button class="hero__enter" id="enterBtn" data-magnetic>
-            <span>Click the house</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7" /></svg>
-          </button>
-        </div>
-        <div class="hero__scroll mono">scroll to step inside</div>
+      <div class="hero__dots" role="tablist" aria-label="Campaign slides">
+        <button class="hero__dot is-on" role="tab" aria-selected="true" aria-label="Front"><i></i></button>
+        <button class="hero__dot" role="tab" aria-selected="false" aria-label="Back"><i></i></button>
       </div>
     </section>
 
-    <!-- 01 ORIGIN — Melbourne laneways -->
-    <section class="chapter origin" id="origin" data-chapter="01 — Origin">
-      <div class="sticky stage-bg">
-        <div class="layer layer--bg" data-depth="0.25" style="--img:url('https://d8j0ntlcm91z4.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/hf_20261018_112257_01d0201d-fed7-421e-ac47-ed4ae0e646d7.png')"></div>
-        <div class="layer layer--shade"></div>
-      </div>
-      <div class="sticky stage-fg">
-        <div class="origin__copy">
-          <p class="eyebrow mono">Chapter 01 — Origin</p>
-          <h2 class="display split">Born between<br />bluestone<br />&amp; spray paint.</h2>
-          <p class="lede reveal">Homiz started in Melbourne's laneways — where the walls change overnight and nobody waits for permission. Every piece is made for the ones who walk home late and leave a mark on the way.</p>
-        </div>
-        <div class="origin__tag tag-text" aria-hidden="true">the next gen</div>
-      </div>
+    <!-- INTRO -->
+    <section class="intro shell">
+      <p class="label">Homiz — the next gen</p>
+      <p class="intro__text" id="introText">Melbourne streetwear for the homies. Two hoodies, four statements, <span class="serif">one house.</span></p>
     </section>
 
-    <!-- 02 COLLECTION — 3D ring -->
-    <section class="chapter collection" id="collection" data-chapter="02 — Drop 001">
-      <div class="sticky stage-bg"></div>
-      <div class="sticky stage-fg">
-        <div class="collection__head">
-          <p class="eyebrow mono">Chapter 02 — Drop 001</p>
-          <h2 class="display">Four pieces.<br /><em class="serif">One house.</em></h2>
-        </div>
-        <div class="collection__caption" id="ringCaption">
-          <span class="mono collection__idx" id="ringIdx">01 / 04</span>
-          <span class="collection__name serif" id="ringName">Fear Less — Burgundy</span>
-          <span class="mono collection__desc" id="ringDesc">Back · acid mineral wash · puff stars</span>
-        </div>
-        <div class="collection__hint mono">drag or scroll to turn the ring · click a piece</div>
-        <!-- Fallback grid for no-WebGL -->
-        <div class="fallback-grid">
-          <img src="assets/cut-fearless-burgundy.webp" alt="Fear Less hoodie, burgundy, back" loading="lazy" />
-          <img src="assets/cut-blessed-burgundy.webp" alt="Feel Blessed zip hoodie, burgundy, front" loading="lazy" />
-          <img src="assets/cut-fearless-black.webp" alt="Fear Less hoodie, washed black, back" loading="lazy" />
-          <img src="assets/cut-blessed-black.webp" alt="Feel Blessed zip hoodie, washed black, front" loading="lazy" />
-        </div>
+    <!-- SHOP -->
+    <section class="shop shell" id="shop">
+      <div class="sec-head">
+        <h2>New Arrivals</h2>
+        <a class="label" href="#lookbook">View lookbook</a>
       </div>
-    </section>
-
-    <!-- 03 TWO FACES — turntable -->
-    <section class="chapter twoface" id="twoface" data-chapter="03 — Two Faces">
-      <div class="sticky stage-bg"></div>
-      <div class="sticky stage-fg">
-        <div class="twoface__left">
-          <p class="eyebrow mono">Chapter 03 — Two Faces</p>
-          <h2 class="display twoface__title">
-            <span class="tf tf--front">Feel<br /><em class="serif">Blessed.</em></span>
-            <span class="tf tf--back">Fear<br /><em class="serif">Less.</em></span>
-          </h2>
-          <p class="lede">One zip hoodie, two statements. Gratitude on the chest, nerve on the back — wear whichever side the day needs.</p>
-        </div>
-        <div class="twoface__right">
-          <div class="swatches" role="group" aria-label="Colourway">
-            <button class="swatch is-active" data-colour="burgundy" data-magnetic aria-pressed="true"><i style="--c:#7d2e35"></i>Burgundy</button>
-            <button class="swatch" data-colour="black" data-magnetic aria-pressed="false"><i style="--c:#2b2a2a"></i>Washed Black</button>
+      <div class="grid">
+        <article class="card" data-product="hoodie-burgundy">
+          <a class="card__media reveal-img" href="#shop" data-quick>
+            <img class="main" src="assets/products/blessed-burgundy.webp" alt="Feel Blessed zip hoodie in burgundy, front" loading="lazy" />
+            <img class="alt" src="assets/products/fearless-burgundy.webp" alt="" loading="lazy" />
+          </a>
+          <span class="card__badge label">New</span>
+          <button class="card__wish" aria-pressed="false" aria-label="Add Feel Blessed zip hoodie, burgundy, to wishlist"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z" /></svg></button>
+          <button class="card__quick label" data-quick>Quick view</button>
+          <div class="card__info">
+            <h3 class="card__name">Feel Blessed Zip Hoodie — Burgundy</h3>
+            <p class="card__price">Price at drop</p>
+            <div class="card__swatches" aria-hidden="true"><i class="on" style="--c:#8a3a40"></i><i style="--c:#34302f"></i></div>
           </div>
-          <div class="twoface__side mono"><span id="sideLabel">Front</span> — scroll to turn</div>
+        </article>
+        <article class="card" data-product="hoodie-black">
+          <a class="card__media reveal-img" href="#shop" data-quick>
+            <img class="main" src="assets/products/blessed-black.webp" alt="Feel Blessed zip hoodie in washed black, front" loading="lazy" />
+            <img class="alt" src="assets/products/fearless-black.webp" alt="" loading="lazy" />
+          </a>
+          <span class="card__badge label">New</span>
+          <button class="card__wish" aria-pressed="false" aria-label="Add Feel Blessed zip hoodie, washed black, to wishlist"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z" /></svg></button>
+          <button class="card__quick label" data-quick>Quick view</button>
+          <div class="card__info">
+            <h3 class="card__name">Feel Blessed Zip Hoodie — Washed Black</h3>
+            <p class="card__price">Price at drop</p>
+            <div class="card__swatches" aria-hidden="true"><i style="--c:#8a3a40"></i><i class="on" style="--c:#34302f"></i></div>
+          </div>
+        </article>
+        <article class="card" data-product="pant-burgundy">
+          <a class="card__media reveal-img" href="#shop" data-quick>
+            <img class="main" src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/c409c4cf-a60a-468f-a1c0-46028b6f78ee.webp" alt="Fear Less trackpant in burgundy, front" loading="lazy" />
+            <img class="alt" src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/2bcf24b3-a74f-439b-bdde-3aa49be29611.webp" alt="" loading="lazy" />
+          </a>
+          <span class="card__badge label">Coming soon</span>
+          <button class="card__wish" aria-pressed="false" aria-label="Add Fear Less trackpant, burgundy, to wishlist"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z" /></svg></button>
+          <button class="card__quick label" data-quick>Quick view</button>
+          <div class="card__info">
+            <h3 class="card__name">Fear Less Trackpant — Burgundy</h3>
+            <p class="card__price">Price at drop</p>
+            <div class="card__swatches" aria-hidden="true"><i class="on" style="--c:#8a3a40"></i><i style="--c:#34302f"></i></div>
+          </div>
+        </article>
+        <article class="card" data-product="pant-black">
+          <a class="card__media reveal-img" href="#shop" data-quick>
+            <img class="main" src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/c796e89e-3b6b-44be-87d8-496e56b2d1e3.webp" alt="Fear Less trackpant in washed black, front" loading="lazy" />
+            <img class="alt" src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/62c9b947-8713-4e4a-8f14-9049e17622a2.webp" alt="" loading="lazy" />
+          </a>
+          <span class="card__badge label">Coming soon</span>
+          <button class="card__wish" aria-pressed="false" aria-label="Add Fear Less trackpant, washed black, to wishlist"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z" /></svg></button>
+          <button class="card__quick label" data-quick>Quick view</button>
+          <div class="card__info">
+            <h3 class="card__name">Fear Less Trackpant — Washed Black</h3>
+            <p class="card__price">Price at drop</p>
+            <div class="card__swatches" aria-hidden="true"><i style="--c:#8a3a40"></i><i class="on" style="--c:#34302f"></i></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- STORY: horizontal chapters -->
+    <section class="story" id="story" aria-label="Our story">
+      <div class="story__pin">
+        <div class="story__top shell">
+          <p class="label">Our story</p>
+          <div class="story__progress"><i id="storyProgress"></i></div>
+        </div>
+        <div class="story__track" id="storyTrack">
+          <article class="panel panel--wide">
+            <div class="panel__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/2177d36f-e74e-415c-ac75-74a19b54b05b.webp" alt="A Melbourne graffiti laneway at night, wet bluestone reflecting red light" loading="lazy" /></div>
+            <div><span class="panel__num">01</span><h3>Born between bluestone and spray paint</h3><p>Homiz started in Melbourne's laneways, where the walls change overnight and nobody waits for permission.</p></div>
+          </article>
+          <article class="panel">
+            <div class="panel__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/f2e20afa-1d22-4abd-8a36-8a62a84784d5.webp" alt="Model on the Flinders Street Station steps in the washed-black Feel Blessed hoodie" loading="lazy" /></div>
+            <div><span class="panel__num">02</span><h3>Feel Blessed, on the chest</h3><p>Gratitude goes up front. The script is cracked and distressed, printed over an acid mineral wash so it already looks lived in.</p></div>
+          </article>
+          <article class="panel">
+            <div class="panel__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/079a93e6-a72d-445d-94f0-13bc6f29c6ec.webp" alt="Model on a Melbourne tram seen from behind, hood up, Fear Less across the back" loading="lazy" /></div>
+            <div><span class="panel__num">03</span><h3>Fear Less, on the back</h3><p>Nerve goes behind you, with “i'm busy” stitched on the hood for anyone who tries to slow you down.</p></div>
+          </article>
+          <article class="panel">
+            <div class="panel__media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/b2f6f1b1-3c41-4914-83a9-59dd7fd63ab3.webp" alt="Close-up of three raised white puff stars on a burgundy acid-wash sleeve" loading="lazy" /></div>
+            <div><span class="panel__num">04</span><h3>Made to be touched</h3><p>Three raised puff stars down each sleeve. Heavy fleece, ribbed cuffs, a boxy cropped fit. No two washes come out the same.</p></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 04 DETAILS — stars -->
-    <section class="chapter details" id="details" data-chapter="04 — Details">
-      <div class="sticky stage-bg">
-        <div class="layer layer--fabric" data-depth="0.15"></div>
-        <div class="layer layer--shade layer--shade-soft"></div>
-      </div>
-      <div class="sticky stage-fg">
-        <div class="details__head">
-          <p class="eyebrow mono">Chapter 04 — Built loud</p>
-          <h2 class="display split">Six stars.<br />Zero quiet.</h2>
+    <!-- TWO FACES -->
+    <section class="faces" id="faces" aria-label="Two faces">
+      <div class="faces__pin shell">
+        <div class="faces__copy">
+          <p class="label">One hoodie, two faces</p>
+          <h2 class="faces__title">
+            <span class="front">Feel<br /><em class="serif">Blessed.</em></span>
+            <span class="back">Fear<br /><em class="serif">Less.</em></span>
+          </h2>
+          <p>Scroll to turn it around, or drag it yourself. Wear whichever side the day needs.</p>
+          <div class="swatches" role="group" aria-label="Colourway">
+            <button class="swatch label" data-colour="burgundy" aria-pressed="true"><i style="--c:#8a3a40"></i>Burgundy</button>
+            <button class="swatch label" data-colour="black" aria-pressed="false"><i style="--c:#34302f"></i>Washed Black</button>
+          </div>
+          <p class="faces__side label"><span id="sideLabel">Front</span> view</p>
         </div>
-        <ul class="details__list">
-          <li class="spec reveal"><span class="mono">01</span><b>Puff-star appliqué</b><span>Three raised stars down each sleeve — you can feel them.</span></li>
-          <li class="spec reveal"><span class="mono">02</span><b>Acid mineral wash</b><span>Every piece marbles differently. No two are the same.</span></li>
-          <li class="spec reveal"><span class="mono">03</span><b>“i'm busy” hood</b><span>Embroidered where only the people behind you can read it.</span></li>
-          <li class="spec reveal"><span class="mono">04</span><b>Two-way zip, cropped body</b><span>Heavy fleece, ribbed cuffs and hem, boxy drop-shoulder fit.</span></li>
-        </ul>
+        <div class="faces__stage">
+          <div class="faces__glow"></div>
+          <div class="faces__floor"></div>
+          <div class="flip" id="flip">
+            <div class="flip__face flip__face--front">
+              <img class="main" src="assets/cut-blessed-burgundy.webp" alt="Feel Blessed zip hoodie, front" />
+              <img class="alt" src="assets/cut-blessed-black.webp" alt="" />
+            </div>
+            <div class="flip__face flip__face--back">
+              <img class="main" src="assets/cut-fearless-burgundy.webp" alt="Fear Less print on the back of the hoodie" />
+              <img class="alt" src="assets/cut-fearless-black.webp" alt="" />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 05 MELBOURNE -->
-    <section class="chapter melbourne" id="melbourne" data-chapter="05 — Melbourne">
-      <div class="sticky stage-bg">
-        <div class="layer layer--bg layer--sky" data-depth="0.3" style="--img:url('https://d8j0ntlcm91z4.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/hf_20261018_112257_04a081ba-8061-4a29-8cd1-d8ed9e044337.png')"></div>
-        <div class="layer layer--shade"></div>
+    <!-- LOOKBOOK -->
+    <section class="look shell" id="lookbook">
+      <div class="sec-head">
+        <h2>Lookbook — Drop 001</h2>
+        <p class="label">Shot in Melbourne</p>
       </div>
-      <div class="sticky stage-fg">
-        <div class="melbourne__copy">
-          <p class="eyebrow mono">Chapter 05 — Home</p>
-          <p class="manifesto" id="manifesto">Homiz is for the homies. For the late trams, the four-seasons-in-a-day, the crew that turns a carpark into a stage. We don't follow the city — we wear it. This is Melbourne. This is the next gen.</p>
-        </div>
-        <div class="melbourne__coords mono">MELB — VIC — 3000</div>
+      <div class="look__grid">
+        <figure class="shot shot--a reveal-img" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/704232f1-0d06-4a13-bc4c-49bf8136381b.webp">
+          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/704232f1-0d06-4a13-bc4c-49bf8136381b.webp" alt="Two models in a concrete studio wearing the full burgundy and washed-black sets" loading="lazy" data-speed="0.06" />
+          <figcaption class="label">The full set</figcaption>
+        </figure>
+        <figure class="shot shot--b reveal-img" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/f2e20afa-1d22-4abd-8a36-8a62a84784d5.webp">
+          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/f2e20afa-1d22-4abd-8a36-8a62a84784d5.webp" alt="Model seated on the Flinders Street Station steps" loading="lazy" data-speed="0.14" />
+          <figcaption class="label">Flinders St</figcaption>
+        </figure>
+        <p class="look__quote">“We don't follow the city. We wear it.”</p>
+        <figure class="shot shot--d reveal-img" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/77121208-0231-435a-bff1-c190edfc4b15.webp">
+          <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/77121208-0231-435a-bff1-c190edfc4b15.webp" alt="Two models walking down a laneway, Fear Less on their backs" loading="lazy" data-speed="0.1" />
+          <figcaption class="label">After hours</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- 06 DROP -->
-    <section class="drop" id="drop" data-chapter="06 — Join">
-      <div class="drop__inner">
-        <p class="eyebrow mono">Drop 001 — limited run</p>
-        <h2 class="drop__title">Come<br />home.</h2>
-        <form class="drop__form" id="dropForm" novalidate>
-          <label for="email" class="sr-only">Email address</label>
-          <input id="email" type="email" placeholder="your@email.com" autocomplete="email" required />
-          <button type="submit" data-magnetic>Get first access</button>
-        </form>
-        <p class="drop__msg mono" id="dropMsg" role="status"></p>
+    <!-- MANIFESTO -->
+    <section class="manifesto" id="manifesto" aria-label="Manifesto">
+      <div class="manifesto__pin shell">
+        <div class="manifesto__bg" style="background-image:url('https://d2ol7oe51mr4n9.cloudfront.net/user_3IyOjJ3Lfp02XcM3tonjT7cwP1k/cb2b1579-58c0-4cdd-bb45-0866a62c20db.webp')"></div>
+        <p class="manifesto__text" id="manifestoText">Homiz is for the homies. For the late trams, the four seasons in a day, the crew that turns a carpark into a stage. This is Melbourne. This is the next gen.</p>
+        <p class="manifesto__coords label">37.8136° S — 144.9631° E</p>
       </div>
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-          <span>fear less ✦ feel blessed ✦ the next gen ✦ homiz ✦ melbourne ✦&nbsp;</span>
-          <span>fear less ✦ feel blessed ✦ the next gen ✦ homiz ✦ melbourne ✦&nbsp;</span>
+    </section>
+
+    <!-- CLUB -->
+    <section class="club" id="club">
+      <div class="club__inner shell">
+        <h2 class="club__title">Join the<br />Homiz Club</h2>
+        <div>
+          <p>First access to every drop, restock alerts, and the occasional invite to something in a laneway.</p>
+          <form class="club__form" id="clubForm" novalidate>
+            <label for="clubEmail" class="sr-only">Email address</label>
+            <input id="clubEmail" type="email" placeholder="Your email" autocomplete="email" required />
+            <button type="submit" class="label">Sign up →</button>
+          </form>
+          <p class="club__msg label" id="clubMsg" role="status"></p>
         </div>
       </div>
-      <footer class="footer mono">
-        <span>© 2026 Homiz</span>
-        <span>Made in Melbourne</span>
-        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
-      </footer>
     </section>
   </main>
 
-  <!-- Product detail overlay -->
-  <div class="detail" id="detail" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="detailName">
-    <button class="detail__close" id="detailClose" data-magnetic aria-label="Close">✕</button>
-    <div class="detail__img"><img id="detailImg" alt="" /></div>
-    <div class="detail__info">
-      <p class="mono" id="detailIdx"></p>
-      <h3 class="serif" id="detailName"></h3>
-      <p id="detailDesc"></p>
-      <a href="#drop" class="detail__cta" id="detailCta" data-magnetic>Notify me at drop</a>
+  <footer class="footer shell">
+    <div class="footer__cols">
+      <div><h4 class="label">Shop</h4><ul><li><a href="#shop">New arrivals</a></li><li><a href="#shop">Hoodies</a></li><li><a href="#shop">Trackpants</a></li><li><a href="#lookbook">Lookbook</a></li></ul></div>
+      <div><h4 class="label">Help</h4><ul><li><a href="#club">Shipping</a></li><li><a href="#club">Returns</a></li><li><a href="#club">Size guide</a></li><li><a href="#club">Contact</a></li></ul></div>
+      <div><h4 class="label">Homiz</h4><ul><li><a href="#story">Our story</a></li><li><a href="#manifesto">Manifesto</a></li><li><a href="#club">Homiz Club</a></li></ul></div>
+      <div><h4 class="label">Follow</h4><ul><li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a></li></ul></div>
     </div>
-  </div>
+    <div class="footer__mark"><img src="assets/logo-black.png" alt="homiz — the next gen" loading="lazy" /></div>
+    <div class="footer__base label"><span>© 2026 Homiz</span><span>Made in Melbourne</span></div>
+  </footer>
 
-  <script type="module" src="main.js"></script>
+  <!-- Quick view -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="qvName" role="dialog" aria-modal="true">
+    <div class="drawer__head"><span class="label">Quick view</span><button class="drawer__close" id="drawerClose" aria-label="Close">✕</button></div>
+    <div class="drawer__gallery"><img id="qvA" alt="" /><img id="qvB" alt="" /></div>
+    <div class="drawer__body">
+      <p class="label" id="qvBadge"></p>
+      <h3 id="qvName"></h3>
+      <p id="qvDesc"></p>
+      <div><p class="label" style="margin-bottom:10px">Size</p>
+        <div class="sizes" id="qvSizes">
+          <button class="size" aria-pressed="false">XS</button><button class="size" aria-pressed="false">S</button><button class="size" aria-pressed="false">M</button><button class="size" aria-pressed="false">L</button><button class="size" aria-pressed="false">XL</button>
+        </div>
+      </div>
+      <button class="btn btn--ink" id="qvNotify">Notify me at drop</button>
+      <p class="drawer__note" id="qvNote" role="status"></p>
+    </div>
+  </aside>
+
+  <!-- Mobile menu -->
+  <aside class="drawer drawer--left" id="menu" aria-hidden="true" aria-label="Menu">
+    <div class="drawer__head"><img src="assets/logo-black.png" alt="homiz" style="width:90px" /><button class="drawer__close" id="menuClose" aria-label="Close menu">✕</button></div>
+    <ul class="menu-list">
+      <li><a href="#shop">Shop</a></li><li><a href="#story">Our Story</a></li><li><a href="#faces">Two Faces</a></li><li><a href="#lookbook">Lookbook</a></li><li><a href="#club">Homiz Club</a></li>
+    </ul>
+  </aside>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img id="lightboxImg" alt="" /></div>
 </body>
 </html>
