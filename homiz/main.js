@@ -280,7 +280,7 @@
           panelImgs.forEach((img) => {
             const r = img.parentElement.getBoundingClientRect();
             const c = (r.left + r.width / 2) / innerWidth - 0.5;
-            img.style.transform = `translate3d(${c * -60}px, 0, 0) scale(1.06)`;
+            img.style.transform = `translate3d(${c * -50}px, 0, 0)`;
           });
         },
       },
